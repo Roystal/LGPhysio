@@ -29,10 +29,9 @@ class _OverallScaffoldState extends State<OverallScaffold> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-            args.patientName,
-            style: GoogleFonts.getFont('Roboto'),
-          ),
+          title: Text(args.patientName,
+              style: GoogleFonts.roboto(
+                  fontSize: 30, fontWeight: FontWeight.bold)),
         ),
         body: MyHomePage(nameOfWorkout: args.exercise));
   }
@@ -102,94 +101,72 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 
+  int _counter = 10 * 1000;
+  Timer _timer;
+  bool timerOn = false;
+
+  // timer stuff
+  void _startTimer() {
+    _counter = 10;
+    if (_timer != null) {
+      _timer.cancel();
+    }
+    _timer = Timer.periodic(Duration(milliseconds: 10), (timer) {
+      setState(() {
+        if (_counter > 0) {
+          timerOn = true;
+          _counter--;
+        } else {
+          _stopTimer();
+        }
+      });
+    });
+  }
+
+  void _stopTimer() {
+    setState(() {
+      timerOn = false;
+      _counter = 10 * 1000;
+      _timer.cancel();
+    });
+  }
+
   Container _buildStartStopContainer() {
     return Container(
-      margin: const EdgeInsets.only(bottom: 20.0, top: 20.0),
-      child: ButtonWidget(),
-    );
+        child: Material(
+            child: Transform.scale(
+                scale: 4,
+                child: IconButton(
+                  alignment: Alignment.center,
+                  icon: timerOn ? Icon(Icons.pause) : Icon(Icons.play_arrow),
+                  color: timerOn ? Colors.red : Colors.green,
+                  onPressed: () {
+                    setState(() {
+                      print('$timerOn');
+                      timerOn ? _stopTimer() : _startTimer();
+                    });
+                  },
+                ))));
   }
 
   Container _buildCountdown() {
-    return Container(child: Text('$timerCount'));
+    return Container(
+        margin: const EdgeInsets.only(bottom: 20.0, top: 20.0),
+        child: Text(
+            '${Duration(milliseconds: _counter).inMinutes}   :   ${Duration(milliseconds: _counter).inSeconds}    :   $_counter',
+            style:
+                GoogleFonts.roboto(fontSize: 20, fontWeight: FontWeight.bold)));
   }
 
   Container _buildReturnButton() {
     return Container(
-        child: ElevatedButton(
-      onPressed: () {
-        Navigator.pop(context);
-      },
-      child: Text(''),
-    ));
-  }
-}
-
-bool timerOn = false;
-int timerCount = 10;
-
-// Button Widget for starting ending and pausing timer
-class ButtonWidget extends StatefulWidget {
-  @override
-  _ButtonWidgetState createState() => _ButtonWidgetState();
-}
-
-class _ButtonWidgetState extends State<ButtonWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Material(
         child: Transform.scale(
-            scale: 4,
-            child: IconButton(
-              alignment: Alignment.center,
-              icon: timerOn ? Icon(Icons.pause) : Icon(Icons.play_arrow),
-              color: timerOn ? Colors.red : Colors.green,
+            scale: 0,
+            child: ElevatedButton(
               onPressed: () {
-                print('$timerOn');
-                timerOn ? stopTimer() : startTimer();
+                Navigator.pop(context);
               },
+              child: Text(''),
             )));
-  }
-
-/*
-  void _toggleisStarted() {
-    setState(() {
-      if (timerOn) {
-        timerOn = false;
-        startTimeout.cancel();
-      } else {
-        startTimer();
-      }
-    });
-  }
-*/
-  // timer functions
-
-  Timer _timer;
-
-  void startTimer() {
-    timerCount = 10;
-    const oneSec = const Duration(seconds: 1);
-    _timer = new Timer.periodic(
-      oneSec,
-      (Timer timer) {
-        if (timerCount == 0) {
-          timerOn = false;
-          setState(() {
-            timer.cancel();
-          });
-        } else {
-          timerOn = true;
-          setState(() {
-            timerCount--;
-          });
-        }
-      },
-    );
-  }
-
-  void stopTimer() {
-    _timer.cancel();
-    timerOn = false;
-    timerCount = 10;
   }
 }
