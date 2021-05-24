@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
+import 'main.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -17,7 +18,6 @@ class OverallScaffold extends StatefulWidget {
   OverallScaffold({Key key, this.title}) : super(key: key);
   final String title;
   static const routeName = '/second';
-  //final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
   @override
   _OverallScaffoldState createState() => _OverallScaffoldState();
 }
@@ -25,25 +25,28 @@ class OverallScaffold extends StatefulWidget {
 class _OverallScaffoldState extends State<OverallScaffold> {
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context).settings.arguments as ScreenArguments;
+
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Name of patient',
+            args.patientName,
             style: GoogleFonts.getFont('Roboto'),
           ),
         ),
-        body: MyHomePage());
+        body: MyHomePage(nameOfWorkout: args.exercise));
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  final String nameOfWorkout;
+  const MyHomePage({Key key, this.nameOfWorkout}) : super(key: key);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   // set state
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // workout image
         _buildImageContainer(),
         // name of workout
-        _buildNameOfWorkoutContainer(),
+        _buildNameOfWorkoutContainer(widget.nameOfWorkout),
         // countdown
         _buildCountdown(),
         // Reps and Sets
@@ -73,11 +76,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 
-  Container _buildNameOfWorkoutContainer() {
+  Container _buildNameOfWorkoutContainer(String nameOfWorkout) {
     return Container(
       alignment: Alignment.center,
       child: Text(
-        'Name of workout',
+        nameOfWorkout,
         style: GoogleFonts.roboto(
           fontSize: 20,
         ),

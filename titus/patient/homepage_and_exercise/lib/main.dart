@@ -16,8 +16,9 @@ class MyApp extends StatelessWidget {
       // Routes
       initialRoute: '/',
       routes: {
+        OverallScaffold.routeName: (context) => OverallScaffold(),
         '/': (context) => RandomWords(),
-        '/second': (context) => OverallScaffold(),
+        //'/second': (context) => OverallScaffold(),
       },
     );
   }

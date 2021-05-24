@@ -4,6 +4,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:homepage_and_exercise/exercisepage.dart';
+import 'main.dart';
 
 class RandomWords extends StatefulWidget {
   @override
@@ -58,7 +60,8 @@ class _RandomWordsState extends State<RandomWords> {
     return ListTile(
         onTap: () {
           print('Item $pair was tapped!');
-          Navigator.pushNamed(context, '/second');
+          Navigator.pushNamed(context, OverallScaffold.routeName,
+              arguments: ScreenArguments(pair.first, pair.second));
         },
         leading: FlutterLogo(),
         title: Text(
