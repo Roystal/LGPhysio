@@ -2,7 +2,7 @@
 Orbital 2021 Project 
 
 # Description
-Let's Get Physio-cal is a flutter application meant for Physiotherapy patients and therapists. 
+Let's Get Physio-cal is a flutter-based application meant for Physiotherapy patients and therapists. 
 
 ## For Patients
 - View exercises at a glance
