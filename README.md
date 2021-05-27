@@ -15,3 +15,13 @@ Let's Get Physio-cal is a flutter-based application meant for Physiotherapy pati
 - View patients at a glance
 - View patients details such as injury, progress and exercises
 - Add, edit and comment on patients exercises
+
+# Pages
+### Login Page
+Log into your patient or physiotherapists account
+### Home Page
+For Patients, view your exercises
+For Physiotherapists, view your patients
+### Information page
+For Patients, view and complete your exercises
+For Physiotherapists, view a patients information and add/ edit exercises
