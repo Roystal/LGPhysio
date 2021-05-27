@@ -1,22 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:async';
 import 'main.dart';
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Patient workout screen',
-      home: OverallScaffold(),
-    );
-  }
-}
+import 'countdown_timer.dart';
 
 class OverallScaffold extends StatefulWidget {
-  OverallScaffold({Key key, this.title}) : super(key: key);
-  final String title;
   static const routeName = '/second';
   @override
   _OverallScaffoldState createState() => _OverallScaffoldState();
@@ -25,21 +12,22 @@ class OverallScaffold extends StatefulWidget {
 class _OverallScaffoldState extends State<OverallScaffold> {
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context).settings.arguments as ScreenArguments;
-
+    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     return Scaffold(
+        backgroundColor: Colors.teal[50],
         appBar: AppBar(
+          backgroundColor: Colors.teal[400],
           title: Text(args.patientName,
               style: GoogleFonts.roboto(
-                  fontSize: 30, fontWeight: FontWeight.bold)),
+                  fontSize: 20, fontWeight: FontWeight.bold)),
         ),
         body: MyHomePage(nameOfWorkout: args.exercise));
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key, required this.nameOfWorkout}) : super(key: key);
   final String nameOfWorkout;
-  const MyHomePage({Key key, this.nameOfWorkout}) : super(key: key);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -54,12 +42,15 @@ class _MyHomePageState extends State<MyHomePage> {
         _buildImageContainer(),
         // name of workout
         _buildNameOfWorkoutContainer(widget.nameOfWorkout),
-        // countdown
-        _buildCountdown(),
+
         // Reps and Sets
         _buildRepCountContainer(),
-        // start / stop button
-        _buildStartStopContainer(),
+
+        BuildCountdown(
+          TimerEnd: () {
+            print('Timer end');
+          },
+        ),
         // return to home page
         _buildReturnButton(),
       ],
@@ -87,75 +78,25 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // get exercise information from backend
+
+  var _reps = 4;
   Container _buildRepCountContainer() {
     return Container(
-        margin: const EdgeInsets.only(bottom: 30.0, top: 30.0),
+        margin: const EdgeInsets.only(bottom: 0, top: 30.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text('Reps: 4/8',
                 style: GoogleFonts.roboto(
                     fontSize: 20, fontWeight: FontWeight.bold)),
-            Text('Sets: 1/3', style: GoogleFonts.roboto(fontSize: 20)),
+            Text(
+              'Sets: 1/3',
+              style:
+                  GoogleFonts.roboto(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
           ],
         ));
-  }
-
-  int _counter = 10 * 1000;
-  Timer _timer;
-  bool timerOn = false;
-
-  // timer stuff
-  void _startTimer() {
-    _counter = 10;
-    if (_timer != null) {
-      _timer.cancel();
-    }
-    _timer = Timer.periodic(Duration(milliseconds: 10), (timer) {
-      setState(() {
-        if (_counter > 0) {
-          timerOn = true;
-          _counter--;
-        } else {
-          _stopTimer();
-        }
-      });
-    });
-  }
-
-  void _stopTimer() {
-    setState(() {
-      timerOn = false;
-      _counter = 10 * 1000;
-      _timer.cancel();
-    });
-  }
-
-  Container _buildStartStopContainer() {
-    return Container(
-        child: Material(
-            child: Transform.scale(
-                scale: 4,
-                child: IconButton(
-                  alignment: Alignment.center,
-                  icon: timerOn ? Icon(Icons.pause) : Icon(Icons.play_arrow),
-                  color: timerOn ? Colors.red : Colors.green,
-                  onPressed: () {
-                    setState(() {
-                      print('$timerOn');
-                      timerOn ? _stopTimer() : _startTimer();
-                    });
-                  },
-                ))));
-  }
-
-  Container _buildCountdown() {
-    return Container(
-        margin: const EdgeInsets.only(bottom: 20.0, top: 20.0),
-        child: Text(
-            '${Duration(milliseconds: _counter).inMinutes}   :   ${Duration(milliseconds: _counter).inSeconds}    :   $_counter',
-            style:
-                GoogleFonts.roboto(fontSize: 20, fontWeight: FontWeight.bold)));
   }
 
   Container _buildReturnButton() {
