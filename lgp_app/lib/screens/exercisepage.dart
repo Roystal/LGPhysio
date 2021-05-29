@@ -58,8 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Container _buildImageContainer() {
+    Size size = MediaQuery.of(context).size;
     return Container(
-        margin: const EdgeInsets.all(60.0),
+        margin: const EdgeInsets.all(40.0),
         alignment: Alignment.center,
         child: Image.asset(
           'assets/images/workout_image_1.png',
