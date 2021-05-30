@@ -57,10 +57,10 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
                 RoundedLimitedField(
-                  hintText: "What are you?",
-                  onChanged: (value) {
-                    setState(() => userType = value);
-                  },
+                  hintText: "What are you",
+                  /*onChanged: (value) {
+                    userType = value;
+                  },*/
                 ),
                 RoundedInputField(
                   hintText: "Email",
