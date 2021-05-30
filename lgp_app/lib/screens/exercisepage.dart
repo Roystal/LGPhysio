@@ -3,16 +3,18 @@ import 'package:google_fonts/google_fonts.dart';
 import '../models/patient_data.dart';
 import '../widgets/countdown_timer.dart';
 
-class OverallScaffold extends StatefulWidget {
+class ExercisePage extends StatefulWidget {
   static const routeName = '/second';
   @override
-  _OverallScaffoldState createState() => _OverallScaffoldState();
+  _ExercisePageState createState() => _ExercisePageState();
 }
 
-class _OverallScaffoldState extends State<OverallScaffold> {
+class _ExercisePageState extends State<ExercisePage> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
         backgroundColor: Colors.teal[50],
         appBar: AppBar(
@@ -21,13 +23,15 @@ class _OverallScaffoldState extends State<OverallScaffold> {
               style: GoogleFonts.roboto(
                   fontSize: 20, fontWeight: FontWeight.bold)),
         ),
-        body: MyHomePage(nameOfWorkout: args.exercise));
+        body: MyHomePage(nameOfWorkout: args.exercise, size: size));
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.nameOfWorkout}) : super(key: key);
+  const MyHomePage({Key? key, required this.nameOfWorkout, required this.size})
+      : super(key: key);
   final String nameOfWorkout;
+  final Size size;
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -39,12 +43,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return Column(
       children: [
         // workout image
-        _buildImageContainer(),
+        _buildImageContainer(widget.size),
         // name of workout
         _buildNameOfWorkoutContainer(widget.nameOfWorkout),
 
         // Reps and Sets
-        _buildRepCountContainer(),
+        _buildRepCountContainer(widget.size),
 
         BuildCountdown(
           TimerEnd: () {
@@ -57,12 +61,13 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Container _buildImageContainer() {
+  Container _buildImageContainer(Size size) {
     return Container(
-        margin: const EdgeInsets.all(60.0),
+        margin: EdgeInsets.all(size.height * 0.05),
         alignment: Alignment.center,
         child: Image.asset(
           'assets/images/workout_image_1.png',
+          height: size.height * 0.2,
         ));
   }
 
@@ -81,9 +86,9 @@ class _MyHomePageState extends State<MyHomePage> {
   // get exercise information from backend
 
   var _reps = 4;
-  Container _buildRepCountContainer() {
+  Container _buildRepCountContainer(Size size) {
     return Container(
-        margin: const EdgeInsets.only(bottom: 0, top: 30.0),
+        margin: EdgeInsets.only(top: size.height * 0.05),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

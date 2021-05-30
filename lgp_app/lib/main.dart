@@ -48,15 +48,14 @@ class _MyHomePageState extends State<MyHomePage> {
       child: MaterialApp(
         home: Wrapper(),
         routes: {
-        OverallScaffold.routeName: (context) => OverallScaffold(),
-      },
-      title: "Let's Get Physio-cal",
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-        fontFamily: 'Circular',
+          ExercisePage.routeName: (context) => ExercisePage(),
+        },
+        title: "Let's Get Physio-cal",
+        theme: ThemeData(
+          primarySwatch: Colors.teal,
+          fontFamily: 'Circular',
+        ),
       ),
-      ),
-      
     );
   }
 }

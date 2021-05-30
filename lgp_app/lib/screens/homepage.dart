@@ -103,7 +103,7 @@ class _HomeState extends State<Home> {
     return ListTile(
       onTap: () {
         print('Item $exercise was tapped!');
-        Navigator.pushNamed(this.context, OverallScaffold.routeName,
+        Navigator.pushNamed(this.context, ExercisePage.routeName,
             arguments: ScreenArguments('Sample Patient Name', exercise));
       },
       leading: Icon(Icons.album, color: Colors.teal[800]),

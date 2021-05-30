@@ -13,12 +13,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Nav screens',
 
-      initialRoute: '/',
+      initialRoute: ExercisePage.routeName,
       // Routes
       routes: {
-        OverallScaffold.routeName: (context) => OverallScaffold(),
-        '/': (context) => RandomWords(),
-        // '/second': (context) => OverallScaffold(),
+        ExercisePage.routeName: (context) => ExercisePage(),
+        ExerciseListPage.routeName: (context) => ExerciseListPage(),
       },
     );
   }

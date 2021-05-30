@@ -3,16 +3,16 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'CircularCountdown.dart';
 
 class BuildCountdown extends StatefulWidget {
-  BuildCountdown({Key? key, required this.TimerEnd}) : super(key: key);
-  final VoidCallback TimerEnd;
+  BuildCountdown({Key? key, required this.onTimerEnd, required this.duration})
+      : super(key: key);
+  final VoidCallback onTimerEnd;
+  final int duration;
   @override
   _BuildCountdownState createState() => _BuildCountdownState();
 }
 
 class _BuildCountdownState extends State<BuildCountdown> {
   CountDownController _controller = CountDownController();
-
-  int _duration = 10;
   bool timerOn = false;
   @override
   Widget build(BuildContext context) {
@@ -20,9 +20,11 @@ class _BuildCountdownState extends State<BuildCountdown> {
         alignment: Alignment.center,
         child: Column(children: [
           BuildCircularTimer(
-              duration: _duration,
+              duration: widget.duration,
               controller: _controller,
               onTimerend: () {
+                //onTimerEnd();
+
                 setState(() {
                   timerOn = false;
                   _controller.start();

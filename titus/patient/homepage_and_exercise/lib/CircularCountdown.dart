@@ -17,6 +17,7 @@ class BuildCircularTimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return CircularCountDownTimer(
       // Countdown duration in Seconds.
       duration: _duration,
@@ -28,10 +29,10 @@ class BuildCircularTimer extends StatelessWidget {
       controller: _controller,
 
       // Width of the Countdown Widget.
-      width: MediaQuery.of(context).size.width / 4,
+      width: size.height < size.width ? size.height / 4 : size.width / 4,
 
       // Height of the Countdown Widget.
-      height: MediaQuery.of(context).size.height / 4,
+      height: size.height / 4,
 
       // Ring Color for Countdown Widget.
       ringColor: Colors.grey[300]!,

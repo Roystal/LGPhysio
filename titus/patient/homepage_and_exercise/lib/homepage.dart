@@ -7,12 +7,13 @@ import 'package:homepage_and_exercise/exercisepage.dart';
 import 'main.dart';
 import 'dart:math';
 
-class RandomWords extends StatefulWidget {
+class ExerciseListPage extends StatefulWidget {
+  static const routeName = '/';
   @override
-  _RandomWordsState createState() => _RandomWordsState();
+  _ExerciseListPageState createState() => _ExerciseListPageState();
 }
 
-class _RandomWordsState extends State<RandomWords> {
+class _ExerciseListPageState extends State<ExerciseListPage> {
   final _biggerFont = TextStyle(fontSize: 18.0);
   @override
 
@@ -71,7 +72,7 @@ class _RandomWordsState extends State<RandomWords> {
     return ListTile(
       onTap: () {
         print('Item $exercise was tapped!');
-        Navigator.pushNamed(context, OverallScaffold.routeName,
+        Navigator.pushNamed(context, ExercisePage.routeName,
             arguments: ScreenArguments('Sample Patient Name', exercise));
       },
       leading: Icon(Icons.album, color: Colors.teal[800]),
