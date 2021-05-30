@@ -20,9 +20,9 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
         backgroundColor: Colors.teal[50],
         appBar: AppBar(
           backgroundColor: Colors.teal[400],
-          title: Text(args.patientName,
-              style: GoogleFonts.roboto(
-                  fontSize: 20, fontWeight: FontWeight.bold)),
+          title: Text(
+            args.patientName,
+          ),
         ),
         body: MyHomePage(patientName: args.patientName, size: size));
   }
@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
         margin: EdgeInsets.all(size.height * 0.05),
         alignment: Alignment.center,
         child: Image.asset(
-          'assets/images/patient_img_001.png',
+          'assets/images/patient_img_002.png',
           height: size.height * 0.2,
         ));
   }
@@ -73,30 +73,36 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
       alignment: Alignment.center,
       child: Text(
-        'Next Appointment: ${Random().nextInt(30) + 1}/${Random().nextInt(11) + 1}/2021}',
-        style: GoogleFonts.roboto(
-          fontSize: 20,
-        ),
+        'Next Appointment: ${Random().nextInt(30) + 1}/${Random().nextInt(11) + 1}/2021',
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
   }
 
-  // get exercise information from backend
-
-  var _reps = 4;
+  // get injury information from backend
   Container _buildInjuryContainer(Size size) {
     return Container(
-        margin: EdgeInsets.only(top: size.height * 0.05),
+        margin: EdgeInsets.only(
+            top: size.height * 0.05, bottom: size.height * 0.05),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('ACL reconstruction Right Knee, lateral meniscus tear',
-                style: GoogleFonts.roboto(
-                    fontSize: 20, fontWeight: FontWeight.bold)),
+            Container(
+              margin: EdgeInsets.only(
+                  right: size.width * 0.05,
+                  left: size.width * 0.10,
+                  bottom: size.height * 0.04),
+              child: Text(
+                'ACL reconstruction Right Knee, lateral meniscus tear',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
             Text(
               'Week: ${Random().nextInt(30) + 1}',
-              style:
-                  GoogleFonts.roboto(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],
         ));

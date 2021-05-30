@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.teal[50],
       appBar: AppBar(
-        title: Text('Exercise List'),
+        title: Text('Patient List'),
         backgroundColor: Colors.teal[400],
         actions: [
           Column(
@@ -68,18 +68,20 @@ class _HomeState extends State<Home> {
 
   // build suggestions function
   Widget _buildSuggestions() {
+    const int noOfPatients = 24; // get from firebase
     return ListView.builder(
         padding: EdgeInsets.all(16.0),
+        itemCount: noOfPatients * 2,
         itemBuilder: /*1*/ (context, i) {
           if (i.isOdd) return Divider(); /*2*/
 
           final index = i ~/ 2; /*3*/
 
-          return _buildRow(_getPatientName(), index);
+          return _buildRow(_getPatientName(index), index);
         });
   }
 
-  String _getPatientName() {
+  String _getPatientName(int index) {
     var sampleNames = [
       'Titus Ng',
       'Roy Chua',
@@ -88,8 +90,25 @@ class _HomeState extends State<Home> {
       'Lim Zhi Xiong',
       'Bob Christenson',
       'William Edison',
+      'Joy Serena',
+      'Dick Stacy',
+      'Yong Quan Tan',
+      'Chong Yu Le',
+      'Max Lee',
+      'Tan Kah Kee',
+      'Tan Tock Seng',
+      'Taylor Musk',
+      'Elon Swift',
+      'Fernando Muchi',
+      'Felix Pietro',
+      'Monza Costa',
+      'Chan Da Xiong',
+      'Lee Jun Er',
+      'Tamie Ng',
+      'Jaymes May',
+      'Jeremy Williamson'
     ];
-    return sampleNames[Random().nextInt(sampleNames.length)];
+    return sampleNames[index];
   }
 
   // build row function
@@ -98,7 +117,7 @@ class _HomeState extends State<Home> {
       onTap: () {
         print('Item $patientName was tapped!');
         Navigator.pushNamed(this.context, PatientInfoPage.routeName,
-            arguments: ScreenArguments('Sample Patient Name'));
+            arguments: ScreenArguments(patientName));
       },
       leading: Icon(Icons.album, color: Colors.teal[800]),
       title: Text(
@@ -106,7 +125,7 @@ class _HomeState extends State<Home> {
         style: _biggerFont,
       ),
       subtitle: Text(
-          'Next Appointment: ${Random().nextInt(30) + 1}/${Random().nextInt(11) + 1}/2021}'),
+          'Next Appointment: ${Random().nextInt(30) + 1}/${Random().nextInt(11) + 1}/2021'),
     );
   }
 }
