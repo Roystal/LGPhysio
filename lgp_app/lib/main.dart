@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'services/auth.dart';
 import 'models/custom_user.dart';
 import 'screens/exercisepage.dart';
-import 'screens/homepage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
