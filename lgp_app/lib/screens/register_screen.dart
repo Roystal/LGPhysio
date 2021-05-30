@@ -6,6 +6,7 @@ import '../widgets/rounded_password_field.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/already_have_account.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../widgets/patient_or_physio_button.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -22,6 +23,7 @@ class _RegisterState extends State<Register> {
   String email = "";
   String password = "";
   String error = "";
+  String userType = "";
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -61,6 +63,13 @@ class _RegisterState extends State<Register> {
                     setState(() => email = value);
                   },
                 ),
+                RoundedLimitedField(
+                  hintText: "What are you?",
+                  onChanged: (value) {
+                    setState(() => userType = value);
+                  },
+                ),
+                SizedBox(height: size.height * 0.01),
                 RoundedPasswordField(
                   validate: (value) => value!.length < 6
                       ? 'Enter a password 6+ chars long'
