@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>480961752056-fdgbgr2bg5ih1tdld31iigeijn5d7r45.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.480961752056-fdgbgr2bg5ih1tdld31iigeijn5d7r45</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDJsHX5qGOU51kj8_dJIh662w-LjqveHVg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>480961752056</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.lgpApp</string>
+	<key>PROJECT_ID</key>
+	<string>lgphysio</string>
+	<key>STORAGE_BUCKET</key>
+	<string>lgphysio.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:480961752056:ios:bc311053f2ec3dec2a040d</string>
+</dict>
+</plist>
