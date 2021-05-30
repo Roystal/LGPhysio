@@ -56,6 +56,12 @@ class _RegisterState extends State<Register> {
                     height: size.height * 0.30,
                   ),
                 ),
+                RoundedLimitedField(
+                  hintText: "What are you?",
+                  onChanged: (value) {
+                    setState(() => userType = value);
+                  },
+                ),
                 RoundedInputField(
                   hintText: "Email",
                   validate: (value) => value!.isEmpty ? 'Enter an email' : null,
@@ -63,13 +69,6 @@ class _RegisterState extends State<Register> {
                     setState(() => email = value);
                   },
                 ),
-                RoundedLimitedField(
-                  hintText: "What are you?",
-                  onChanged: (value) {
-                    setState(() => userType = value);
-                  },
-                ),
-                SizedBox(height: size.height * 0.01),
                 RoundedPasswordField(
                   validate: (value) => value!.length < 6
                       ? 'Enter a password 6+ chars long'
