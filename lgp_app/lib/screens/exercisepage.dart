@@ -20,8 +20,7 @@ class _ExercisePageState extends State<ExercisePage> {
         appBar: AppBar(
           backgroundColor: Colors.teal[400],
           title: Text(args.patientName,
-              style: GoogleFonts.roboto(
-                  fontSize: 20, fontWeight: FontWeight.bold)),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         ),
         body: MyHomePage(nameOfWorkout: args.exercise, size: size));
   }
@@ -76,9 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
       alignment: Alignment.center,
       child: Text(
         nameOfWorkout,
-        style: GoogleFonts.roboto(
-          fontSize: 20,
-        ),
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -92,13 +89,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('Reps: 4/8',
-                style: GoogleFonts.roboto(
-                    fontSize: 20, fontWeight: FontWeight.bold)),
+            Text('Reps: 4/8', style: TextStyle(fontSize: 20)),
             Text(
               'Sets: 1/3',
-              style:
-                  GoogleFonts.roboto(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 20,
+              ),
             ),
           ],
         ));
