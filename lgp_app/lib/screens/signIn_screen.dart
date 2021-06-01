@@ -5,6 +5,7 @@ import '../widgets/rounded_password_field.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/already_have_account.dart';
 import '../widgets/sign_in_anon.dart';
+import '../widgets/loading.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -17,6 +18,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   String email = "";
   String password = "";
@@ -25,7 +27,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
+    return loading ?  Loading() : Scaffold(
       body: Container(
         color: Colors.teal[50],
         child: SingleChildScrollView(
@@ -72,10 +74,14 @@ class _SignInState extends State<SignIn> {
                   text: "LOGIN",
                   press: () async {
                     if (_formKey.currentState!.validate()) {
-                      dynamic result = await _auth.signInEmailPassword(email, password);
+                      setState(() => loading = true);
+                      dynamic result =
+                          await _auth.signInEmailPassword(email, password);
                       if (result == null) {
-                      setState(() =>
-                      error = "User does not exist");
+                        setState(() {
+                          error = "User does not exist";
+                          loading = false;
+                        });
                       }
                     }
                   },
