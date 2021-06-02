@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../models/patient_data.dart';
 import '../widgets/countdown_timer.dart';
 
