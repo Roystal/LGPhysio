@@ -19,6 +19,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   String email = "";
   String password = "";
@@ -27,7 +28,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       resizeToAvoidBottomInset: true,
       body: Container(
         color: Colors.teal[50],
@@ -82,11 +83,14 @@ class _RegisterState extends State<Register> {
                   text: "REGISTER",
                   press: () async {
                     if (_formKey.currentState!.validate()) {
+                      setState(() => loading = true);
                       dynamic result =
                           await _auth.registerEmailPassword(email, password);
                       if (result == null) {
-                        setState(() =>
-                            error = "Please supply a valid email and password");
+                        setState(() {
+                          loading = true;
+                          error = "Please supply a valid email and password";
+                        });
                       }
                     }
                   },
