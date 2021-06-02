@@ -7,6 +7,7 @@ import '../widgets/rounded_button.dart';
 import '../widgets/already_have_account.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/patient_or_physio_button.dart';
+import '../widgets/loading.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
