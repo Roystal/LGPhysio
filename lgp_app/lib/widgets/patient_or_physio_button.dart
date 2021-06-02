@@ -18,36 +18,31 @@ class RoundedLimitedField extends StatefulWidget {
 }
 
 class _RoundedLimitedFieldState extends State<RoundedLimitedField> {
-  int _value =  0;
+  String _chosenValue;
 
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
-      input: DropdownButton(
+      input: DropdownButton<String>(
         isExpanded: true,
-        value: _value,
+        value: _chosenValue,
         //onChanged: widget.onChanged,
         style: TextStyle(color: Colors.grey[800], fontFamily: 'Circular', fontSize: 16),
+        items: <String>[
+          'Pateint',
+          'Physiotherapist',
+        ].map<DropdownMenuItem<String>>((String value){
+          return DropdownMenuItem<String>(
+            child: Text(value),
+            value: value,
+          );
+        }).toList(),
+        hint: Text("What are you"),
         onChanged: (dynamic value) {
           setState(() {
-            _value = value;
+            _chosenValue = value;
           });
         },
-        items: <DropdownMenuItem>[
-          DropdownMenuItem(
-            child: Text("I am a..."),
-            value: 0,
-          ),
-          DropdownMenuItem(
-            child: Text("Patient"),
-            value: 1,
-          ),
-          DropdownMenuItem(
-            child: Text("Physiotherapist"),
-            value: 2,
-          ),
-        ],
-        hint: Text("What are you"),
       ),
     );
   }
