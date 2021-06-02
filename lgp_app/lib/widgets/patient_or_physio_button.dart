@@ -29,7 +29,7 @@ class _RoundedLimitedFieldState extends State<RoundedLimitedField> {
         //onChanged: widget.onChanged,
         style: TextStyle(color: Colors.grey[800], fontFamily: 'Circular', fontSize: 16),
         items: <String>[
-          'Pateint',
+          'Patient',
           'Physiotherapist',
         ].map<DropdownMenuItem<String>>((String value){
           return DropdownMenuItem<String>(
