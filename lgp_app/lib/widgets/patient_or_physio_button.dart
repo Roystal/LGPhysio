@@ -18,7 +18,7 @@ class RoundedLimitedField extends StatefulWidget {
 }
 
 class _RoundedLimitedFieldState extends State<RoundedLimitedField> {
-  String _chosenValue;
+  String? _chosenValue;
 
   @override
   Widget build(BuildContext context) {
