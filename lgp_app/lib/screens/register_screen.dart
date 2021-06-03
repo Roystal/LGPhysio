@@ -6,7 +6,6 @@ import '../widgets/rounded_password_field.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/already_have_account.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../widgets/patient_or_physio_button.dart';
 import '../widgets/loading.dart';
 import '../widgets/text_field_container.dart';
 
@@ -63,7 +62,12 @@ class _RegisterState extends State<Register> {
                         ),
                       ),
                       TextFieldContainer(
-                        input: DropdownButton<String>(
+                        input: DropdownButtonFormField<String>(
+                            validator: (value) {
+                              if (value?.isEmpty ?? true) {
+                                return 'Please enter a user type';
+                              }
+                            },
                             isExpanded: true,
                             value: _chosenValue,
                             style: TextStyle(
@@ -82,6 +86,7 @@ class _RegisterState extends State<Register> {
                             hint: Text("What are you"),
                             onChanged: (dynamic value) {
                               setState(() {
+                                userType = value;
                                 _chosenValue = value;
                               });
                             }),
@@ -109,7 +114,7 @@ class _RegisterState extends State<Register> {
                           if (_formKey.currentState!.validate()) {
                             setState(() => loading = true);
                             dynamic result = await _auth.registerEmailPassword(
-                                email, password);
+                                email, password, userType);
                             if (result == null) {
                               setState(() {
                                 loading = true;

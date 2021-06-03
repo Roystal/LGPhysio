@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lgp_app/services/database.dart';
 import '../models/custom_user.dart';
 
 class AuthService {
@@ -10,18 +12,22 @@ class AuthService {
     return inputUser != null ? CustomUser(uid: inputUser.uid) : null;
   }
 
-  /*Future<Map<dynamic, dynamic>> get currentUserClaims async {
+  Future<Map<dynamic, dynamic>> get currentUserClaims async {
   final User? user = FirebaseAuth.instance.currentUser;
-
   // If refresh is set to true, a refresh of the id token is forced.
   final IdTokenResult idTokenResult = await user!.getIdTokenResult(true);
-
   return idTokenResult.claims!;
-}*/
+}
 
   Stream<CustomUser?> get inputUser {
     return _auth.authStateChanges().map(_CreateUser);
   }
+
+    /*void getUserData() async{
+    FirebaseFirestore.instance.collection("users").doc(_auth.u).get().then((value){
+      print(value.data);
+    });
+  }*/
 
   //sign in anon
   Future signInAnon() async {
@@ -46,11 +52,13 @@ class AuthService {
   }
 
 //register with email and password
-  Future registerEmailPassword(String email, String password) async {
+  Future registerEmailPassword(String email, String password, String userType) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
+      //create a new document with the user with the uid
+      await DatabaseService(uid: user!.uid).updateUserData(name: email, userType: userType);
       return _CreateUser(user);
     } catch (e) {
       print(e.toString());

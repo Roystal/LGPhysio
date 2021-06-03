@@ -8,13 +8,13 @@ import 'package:lgp_app/services/auth.dart';
 import '../models/patient_data.dart';
 import 'dart:math';
 
-class Home extends StatefulWidget {
+class PatientHome extends StatefulWidget {
   //static const routeName = "/";
   @override
-  _HomeState createState() => _HomeState();
+  _PatientHomeState createState() => _PatientHomeState();
 }
 
-class _HomeState extends State<Home> {
+class _PatientHomeState extends State<PatientHome> {
   final AuthService _auth = AuthService();
   final _biggerFont = TextStyle(fontSize: 18.0);
   @override
