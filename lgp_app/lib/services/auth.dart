@@ -10,6 +10,15 @@ class AuthService {
     return inputUser != null ? CustomUser(uid: inputUser.uid) : null;
   }
 
+  /*Future<Map<dynamic, dynamic>> get currentUserClaims async {
+  final User? user = FirebaseAuth.instance.currentUser;
+
+  // If refresh is set to true, a refresh of the id token is forced.
+  final IdTokenResult idTokenResult = await user!.getIdTokenResult(true);
+
+  return idTokenResult.claims!;
+}*/
+
   Stream<CustomUser?> get inputUser {
     return _auth.authStateChanges().map(_CreateUser);
   }

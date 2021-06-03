@@ -4,13 +4,17 @@ import '../widgets/text_field_container.dart';
 class RoundedLimitedField extends StatefulWidget {
   final String hintText;
   final IconData icon;
+  //var onChanged;
+  //final String? chosenValue;
+
   //final ValueChanged<dynamic> onChanged;
 
-  const RoundedLimitedField({
+   RoundedLimitedField({
     Key? key,
     this.hintText = "Dummy",
     this.icon = Icons.star,
     //required this.onChanged,
+    //required this.chosenValue,
   }) : super(key: key);
 
   @override
@@ -26,7 +30,6 @@ class _RoundedLimitedFieldState extends State<RoundedLimitedField> {
       input: DropdownButton<String>(
         isExpanded: true,
         value: _chosenValue,
-        //onChanged: widget.onChanged,
         style: TextStyle(color: Colors.grey[800], fontFamily: 'Circular', fontSize: 16),
         items: <String>[
           'Patient',
@@ -42,7 +45,7 @@ class _RoundedLimitedFieldState extends State<RoundedLimitedField> {
           setState(() {
             _chosenValue = value;
           });
-        },
+        }
       ),
     );
   }
