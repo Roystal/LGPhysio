@@ -6,6 +6,7 @@ import '../widgets/rounded_password_field.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/already_have_account.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../widgets/patient_or_physio_button.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -54,8 +55,11 @@ class _RegisterState extends State<Register> {
                     height: size.height * 0.30,
                   ),
                 ),
+                RoundedLimitedField(
+                  hintText: "What are you",
+                ),
                 RoundedInputField(
-                  hintText: "Email",
+                  hintText: "Username",
                   validate: (value) => value!.isEmpty ? 'Enter an email' : null,
                   onChanged: (value) {
                     setState(() => email = value);
