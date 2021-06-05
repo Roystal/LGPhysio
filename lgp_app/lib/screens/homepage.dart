@@ -7,6 +7,7 @@ import '../screens/exercisepage.dart';
 import 'package:lgp_app/services/auth.dart';
 import '../models/patient_data.dart';
 import 'dart:math';
+import '../widgets/exerciserow.dart';
 
 class Home extends StatefulWidget {
   //static const routeName = "/";
@@ -16,7 +17,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
-  final _biggerFont = TextStyle(fontSize: 18.0);
   @override
   // build function
   Widget build(BuildContext context) {
@@ -55,12 +55,6 @@ class _HomeState extends State<Home> {
             ],
           ),
         ],
-        /*
-        leading: IconButton(
-          icon: Icon(Icons.album, color: Colors.teal[500]),
-          onPressed: null,
-        ),
-        */
       ),
       body: _buildSuggestions(),
     );
@@ -72,10 +66,7 @@ class _HomeState extends State<Home> {
         padding: EdgeInsets.all(16.0),
         itemBuilder: /*1*/ (context, i) {
           if (i.isOdd) return Divider(); /*2*/
-
-          final index = i ~/ 2; /*3*/
-
-          return _buildRow(_getNameOfWorkout(), index);
+          return buildRow(exercise: _getNameOfWorkout());
         });
   }
 
@@ -96,23 +87,5 @@ class _HomeState extends State<Home> {
       'Bending Stretch (90 degrees)'
     ];
     return sampleExercises[Random().nextInt(sampleExercises.length)];
-  }
-
-  // build row function
-  Widget _buildRow(String exercise, int index) {
-    return ListTile(
-      onTap: () {
-        print('Item $exercise was tapped!');
-        Navigator.pushNamed(this.context, ExercisePage.routeName,
-            arguments: ScreenArguments('Sample Patient Name', exercise));
-      },
-      leading: Icon(Icons.album, color: Colors.teal[800]),
-      title: Text(
-        exercise,
-        style: _biggerFont,
-      ),
-      subtitle: Text(
-          'Reps: ${Random().nextInt(10) + 5}, Sets: ${Random().nextInt(4) + 1}'),
-    );
   }
 }
