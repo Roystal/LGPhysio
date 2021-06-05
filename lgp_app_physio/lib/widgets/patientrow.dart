@@ -1,23 +1,22 @@
-import '../screens/exercisepage.dart';
-import 'package:lgp_app/services/auth.dart';
+import '../screens/PatientInfoPage.dart';
 import '../models/patient_data.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 
 class BuildRow extends StatelessWidget {
-  final exercise;
-  BuildRow({required this.exercise});
+  final PatientName;
+  BuildRow({required this.PatientName});
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        print('Item $exercise was tapped!');
-        Navigator.pushNamed(context, ExercisePage.routeName,
-            arguments: ScreenArguments('Sample Patient Name', exercise));
+        print('Item $PatientName was tapped!');
+        Navigator.pushNamed(context, PatientInfoPage.routeName,
+            arguments: ScreenArguments(PatientName));
       },
       leading: Icon(Icons.album, color: Colors.teal[800]),
       title: Text(
-        exercise,
+        PatientName,
       ),
       subtitle: Text(
           'Reps: ${Random().nextInt(10) + 5}, Sets: ${Random().nextInt(4) + 1}'),

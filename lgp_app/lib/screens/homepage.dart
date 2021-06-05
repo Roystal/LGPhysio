@@ -66,7 +66,7 @@ class _HomeState extends State<Home> {
         padding: EdgeInsets.all(16.0),
         itemBuilder: /*1*/ (context, i) {
           if (i.isOdd) return Divider(); /*2*/
-          return buildRow(exercise: _getNameOfWorkout());
+          return BuildRow(exercise: _getNameOfWorkout());
         });
   }
 
