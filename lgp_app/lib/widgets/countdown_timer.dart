@@ -3,8 +3,13 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'CircularCountdown.dart';
 
 class BuildCountdown extends StatefulWidget {
-  BuildCountdown({Key? key, required this.TimerEnd}) : super(key: key);
-  final VoidCallback TimerEnd;
+  BuildCountdown(
+      {required this.nameOfWorkout,
+      required this.patientName,
+      required this.size});
+  final String nameOfWorkout;
+  final String patientName;
+  final Size size;
   @override
   _BuildCountdownState createState() => _BuildCountdownState();
 }
@@ -14,16 +19,27 @@ class _BuildCountdownState extends State<BuildCountdown> {
 
   int _duration = 10;
   bool timerOn = false;
+  int _reps = 4;
+  int _sets = 2;
   @override
   Widget build(BuildContext context) {
     return Container(
+        margin: EdgeInsets.only(top: widget.size.height * 0.05),
         alignment: Alignment.center,
         child: Column(children: [
+          Text('Reps: $_reps/8', style: TextStyle(fontSize: 20)),
+          Text(
+            'Sets: $_sets/3',
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
           BuildCircularTimer(
               duration: _duration,
               controller: _controller,
               onTimerend: () {
                 setState(() {
+                  _reps -= 1;
                   timerOn = false;
                   _controller.start();
                   _controller.pause();
