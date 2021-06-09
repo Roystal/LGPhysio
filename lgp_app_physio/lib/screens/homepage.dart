@@ -3,10 +3,8 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'PatientInfoPage.dart';
 import 'package:lgp_app/services/auth.dart';
-import '../models/patient_data.dart';
-import 'dart:math';
+import '../widgets/patientrow.dart';
 
 class Home extends StatefulWidget {
   //static const routeName = "/";
@@ -77,7 +75,7 @@ class _HomeState extends State<Home> {
 
           final index = i ~/ 2; /*3*/
 
-          return _buildRow(_getPatientName(index), index);
+          return BuildRow(PatientName: _getPatientName(index));
         });
   }
 
@@ -109,23 +107,5 @@ class _HomeState extends State<Home> {
       'Jeremy Williamson'
     ];
     return sampleNames[index];
-  }
-
-  // build row function
-  Widget _buildRow(String patientName, int index) {
-    return ListTile(
-      onTap: () {
-        print('Item $patientName was tapped!');
-        Navigator.pushNamed(this.context, PatientInfoPage.routeName,
-            arguments: ScreenArguments(patientName));
-      },
-      leading: Icon(Icons.album, color: Colors.teal[800]),
-      title: Text(
-        patientName,
-        style: _biggerFont,
-      ),
-      subtitle: Text(
-          'Next Appointment: ${Random().nextInt(30) + 1}/${Random().nextInt(11) + 1}/2021'),
-    );
   }
 }

@@ -23,11 +23,11 @@ class AuthService {
     return _auth.authStateChanges().map(_CreateUser);
   }
 
-    /*void getUserData() async{
-    FirebaseFirestore.instance.collection("users").doc(_auth.u).get().then((value){
-      print(value.data);
-    });
-  }*/
+/*Future getUserType(CustomUser inputUser) async {
+var document = await FirebaseFirestore.instance.collection('users').doc(inputUser.uid).get();
+return document.data["userType"];
+}*/
+
 
   //sign in anon
   Future signInAnon() async {
