@@ -1,5 +1,5 @@
 import '../screens/PatientInfoPage.dart';
-import '../models/patient_data.dart';
+import '../models/physio_data.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 

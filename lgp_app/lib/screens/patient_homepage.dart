@@ -104,7 +104,7 @@ class _PatientHomeState extends State<PatientHome> {
       onTap: () {
         print('Item $exercise was tapped!');
         Navigator.pushNamed(this.context, ExercisePage.routeName,
-            arguments: ScreenArguments('Sample Patient Name', exercise));
+            arguments: PatientScreenArguments('Sample Patient Name', exercise));
       },
       leading: Icon(Icons.album, color: Colors.teal[800]),
       title: Text(

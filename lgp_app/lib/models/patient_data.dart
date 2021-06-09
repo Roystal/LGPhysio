@@ -1,5 +1,5 @@
-class ScreenArguments {
+class PatientScreenArguments {
   final String patientName;
   final String exercise;
-  ScreenArguments(this.patientName, this.exercise);
+  PatientScreenArguments(this.patientName, this.exercise);
 }
