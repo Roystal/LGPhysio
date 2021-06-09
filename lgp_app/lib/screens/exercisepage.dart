@@ -11,7 +11,7 @@ class ExercisePage extends StatefulWidget {
 class _ExercisePageState extends State<ExercisePage> {
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    final args = ModalRoute.of(context)!.settings.arguments as PatientScreenArguments;
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -21,22 +21,14 @@ class _ExercisePageState extends State<ExercisePage> {
           title: Text(args.patientName,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         ),
-        body: MyHomePage(
-            nameOfWorkout: args.exercise,
-            patientName: args.patientName,
-            size: size));
+        body: MyHomePage(nameOfWorkout: args.exercise, size: size));
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage(
-      {Key? key,
-      required this.nameOfWorkout,
-      required this.patientName,
-      required this.size})
+  const MyHomePage({Key? key, required this.nameOfWorkout, required this.size})
       : super(key: key);
   final String nameOfWorkout;
-  final String patientName;
   final Size size;
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -53,10 +45,14 @@ class _MyHomePageState extends State<MyHomePage> {
         // name of workout
         _buildNameOfWorkoutContainer(widget.nameOfWorkout),
 
+        // Reps and Sets
+        _buildRepCountContainer(widget.size),
+
         BuildCountdown(
-            size: widget.size,
-            patientName: widget.patientName,
-            nameOfWorkout: widget.nameOfWorkout),
+          TimerEnd: () {
+            print('Timer end');
+          },
+        ),
         // return to home page
         _buildReturnButton(),
       ],
@@ -81,6 +77,26 @@ class _MyHomePageState extends State<MyHomePage> {
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
+  }
+
+  // get exercise information from backend
+
+  var _reps = 4;
+  Container _buildRepCountContainer(Size size) {
+    return Container(
+        margin: EdgeInsets.only(top: size.height * 0.05),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('Reps: 4/8', style: TextStyle(fontSize: 20)),
+            Text(
+              'Sets: 1/3',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ));
   }
 
   Container _buildReturnButton() {

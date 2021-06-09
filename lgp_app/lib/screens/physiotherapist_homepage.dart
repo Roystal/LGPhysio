@@ -3,10 +3,8 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import '../screens/exercisepage.dart';
 import 'package:lgp_app/services/auth.dart';
-import '../models/patient_data.dart';
-import 'dart:math';
+import '../widgets/patientrow.dart';
 
 class PhysioHome extends StatefulWidget {
   //static const routeName = "/";
@@ -68,51 +66,46 @@ class _PhysioHomeState extends State<PhysioHome> {
 
   // build suggestions function
   Widget _buildSuggestions() {
+    const int noOfPatients = 24; // get from firebase
     return ListView.builder(
         padding: EdgeInsets.all(16.0),
+        itemCount: noOfPatients * 2,
         itemBuilder: /*1*/ (context, i) {
           if (i.isOdd) return Divider(); /*2*/
 
           final index = i ~/ 2; /*3*/
 
-          return _buildRow(_getNameOfWorkout(), index);
+          return BuildRow(PatientName: _getPatientName(index));
         });
   }
 
-  String _getNameOfWorkout() {
-    var sampleExercises = [
-      'Hamstring Stretch',
-      'Calf Stretch',
-      'Knee extension',
-      'Calf raises',
-      'Quad Stretch',
-      'Single leg Bulgarian Squat',
-      'Double leg Squat',
-      'Lunges (both legs)',
-      'Double leg box jumps (20cm)',
-      'Single leg Bridging',
-      'Single leg Hamstring Curl',
-      'Single leg Leg Press',
-      'Bending Stretch (90 degrees)'
+  String _getPatientName(int index) {
+    var sampleNames = [
+      'Titus Ng',
+      'Roy Chua',
+      'Thomas Young',
+      'Tan Jing Heng',
+      'Lim Zhi Xiong',
+      'Bob Christenson',
+      'William Edison',
+      'Joy Serena',
+      'Dick Stacy',
+      'Yong Quan Tan',
+      'Chong Yu Le',
+      'Max Lee',
+      'Tan Kah Kee',
+      'Tan Tock Seng',
+      'Taylor Musk',
+      'Elon Swift',
+      'Fernando Muchi',
+      'Felix Pietro',
+      'Monza Costa',
+      'Chan Da Xiong',
+      'Lee Jun Er',
+      'Tamie Ng',
+      'Jaymes May',
+      'Jeremy Williamson'
     ];
-    return sampleExercises[Random().nextInt(sampleExercises.length)];
-  }
-
-  // build row function
-  Widget _buildRow(String exercise, int index) {
-    return ListTile(
-      onTap: () {
-        print('Item $exercise was tapped!');
-        Navigator.pushNamed(this.context, ExercisePage.routeName,
-            arguments: ScreenArguments('Sample Patient Name', exercise));
-      },
-      leading: Icon(Icons.album, color: Colors.teal[800]),
-      title: Text(
-        exercise,
-        style: _biggerFont,
-      ),
-      subtitle: Text(
-          'Reps: ${Random().nextInt(10) + 5}, Sets: ${Random().nextInt(4) + 1}'),
-    );
+    return sampleNames[index];
   }
 }
