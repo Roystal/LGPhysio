@@ -27,6 +27,8 @@ class _RegisterState extends State<Register> {
   String password = "";
   String error = "";
   String userType = "";
+  String username = "";
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -91,6 +93,14 @@ class _RegisterState extends State<Register> {
                               });
                             }),
                       ),
+                       RoundedInputField(
+                        hintText: "Username",
+                        validate: (value) =>
+                            value!.isEmpty ? 'Enter a username' : null,
+                        onChanged: (value) {
+                          setState(() => username = value);
+                        },
+                      ),
                       RoundedInputField(
                         hintText: "Email",
                         validate: (value) =>
@@ -114,7 +124,7 @@ class _RegisterState extends State<Register> {
                           if (_formKey.currentState!.validate()) {
                             setState(() => loading = true);
                             dynamic result = await _auth.registerEmailPassword(
-                                email, password, userType);
+                                email, password, userType, username);
                             if (result == null) {
                               setState(() {
                                 loading = true;

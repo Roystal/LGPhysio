@@ -52,13 +52,13 @@ return document.data["userType"];
   }
 
 //register with email and password
-  Future registerEmailPassword(String email, String password, String userType) async {
+  Future registerEmailPassword(String email, String password, String userType, String username) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
       //create a new document with the user with the uid
-      await DatabaseService(uid: user!.uid).updateUserData(name: email, userType: userType);
+      await DatabaseService(uid: user!.uid).updateUserData(name: username, userType: userType);
       return _CreateUser(user);
     } catch (e) {
       print(e.toString());

@@ -4,7 +4,7 @@ import '../widgets/BuildAddExercises.dart';
 import 'dart:math';
 
 class PatientInfoPage extends StatefulWidget {
-  static const routeName = 'PatientInfoPage';
+  static const routeName = '/second';
   @override
   _PatientInfoPageState createState() => _PatientInfoPageState();
 }
