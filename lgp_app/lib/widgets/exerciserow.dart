@@ -1,6 +1,6 @@
 import '../screens/exercisepage.dart';
 import 'package:lgp_app/services/auth.dart';
-import '../models/patient_data.dart';
+import '../models/screen_data.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 
@@ -13,7 +13,7 @@ class BuildRow extends StatelessWidget {
       onTap: () {
         print('Item $exercise was tapped!');
         Navigator.pushNamed(context, ExercisePage.routeName,
-            arguments: PatientScreenArguments('Sample Patient Name', exercise));
+            arguments: ScreenArguments('Sample Patient Name', exercise));
       },
       leading: Icon(Icons.album, color: Colors.teal[800]),
       title: Text(

@@ -7,14 +7,12 @@ import 'package:lgp_app/services/auth.dart';
 import '../widgets/patientrow.dart';
 
 class PhysioHome extends StatefulWidget {
-  //static const routeName = "/";
   @override
   _PhysioHomeState createState() => _PhysioHomeState();
 }
 
 class _PhysioHomeState extends State<PhysioHome> {
   final AuthService _auth = AuthService();
-  final _biggerFont = TextStyle(fontSize: 18.0);
   @override
   // build function
   Widget build(BuildContext context) {
@@ -53,12 +51,6 @@ class _PhysioHomeState extends State<PhysioHome> {
             ],
           ),
         ],
-        /*
-        leading: IconButton(
-          icon: Icon(Icons.album, color: Colors.teal[500]),
-          onPressed: null,
-        ),
-        */
       ),
       body: _buildSuggestions(),
     );

@@ -63,6 +63,8 @@ flutter:
     - assets/images/register_image.png
     - assets/images/google-plus.svg
     - assets/images/workout_image_1.png
+    - assets/images/patient_img_001.png
+    - assets/images/patient_img_002.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

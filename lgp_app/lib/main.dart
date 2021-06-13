@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:lgp_app/screens/PatientInfoPage.dart';
 import 'package:lgp_app/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'services/auth.dart';
@@ -12,25 +13,6 @@ void main() async {
 
   runApp(MyHomePage());
 }
-
-/*class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      // Routes
-      routes: {
-        OverallScaffold.routeName: (context) => OverallScaffold(),
-      },
-      title: "Let's Get Physio-cal",
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-        fontFamily: 'Circular',
-      ),
-      home: MyHomePage(),
-    );
-  }
-}*/
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
@@ -48,6 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
         home: Wrapper(),
         routes: {
           ExercisePage.routeName: (context) => ExercisePage(),
+          PatientInfoPage.routeName: (context) => PatientInfoPage(),
         },
         title: "Let's Get Physio-cal",
         theme: ThemeData(

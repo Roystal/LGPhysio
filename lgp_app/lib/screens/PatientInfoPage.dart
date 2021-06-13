@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import '../models/physio_data.dart';
-import '../models/patient_data.dart';
-
+import '../models/screen_data.dart';
 import '../widgets/BuildAddExercises.dart';
 import 'dart:math';
 
 class PatientInfoPage extends StatefulWidget {
-  static const routeName = '/second';
+  static const routeName = 'PatientInfoPage';
   @override
   _PatientInfoPageState createState() => _PatientInfoPageState();
 }
@@ -14,7 +12,7 @@ class PatientInfoPage extends StatefulWidget {
 class _PatientInfoPageState extends State<PatientInfoPage> {
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as PatientScreenArguments;
+    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(

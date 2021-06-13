@@ -1,5 +1,5 @@
 import '../screens/PatientInfoPage.dart';
-import '../models/physio_data.dart';
+import '../models/screen_data.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 
@@ -12,7 +12,7 @@ class BuildRow extends StatelessWidget {
       onTap: () {
         print('Item $PatientName was tapped!');
         Navigator.pushNamed(context, PatientInfoPage.routeName,
-            arguments: PhysioScreenArguments(PatientName));
+            arguments: ScreenArguments(PatientName, 'dummy'));
       },
       leading: Icon(Icons.album, color: Colors.teal[800]),
       title: Text(

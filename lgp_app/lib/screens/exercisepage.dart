@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../models/patient_data.dart';
+import '../models/screen_data.dart';
 import '../widgets/countdown_timer.dart';
 
 class ExercisePage extends StatefulWidget {
-  static const routeName = '/second';
+  static const routeName = 'ExercisePage';
   @override
   _ExercisePageState createState() => _ExercisePageState();
 }
@@ -11,7 +11,8 @@ class ExercisePage extends StatefulWidget {
 class _ExercisePageState extends State<ExercisePage> {
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as PatientScreenArguments;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
