@@ -19,6 +19,7 @@ class _PhysioHomeState extends State<PhysioHome> {
   @override
   // build function
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.teal[50],
       appBar: AppBar(
@@ -62,9 +63,19 @@ class _PhysioHomeState extends State<PhysioHome> {
               .snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
             if (!snapshots.hasData) {
-              print('this happened');
               return Center(
-                child: CircularProgressIndicator(),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/images/no_patient_found.png",
+                      fit: BoxFit.contain,
+                      height: size.height * 0.30,
+                    ),
+                    Text("No patients in the database"),
+                  ],
+                ),
               );
             } else {
               return ListView.builder(
