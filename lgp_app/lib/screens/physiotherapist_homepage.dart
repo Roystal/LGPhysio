@@ -5,6 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:lgp_app/services/auth.dart';
 import '../widgets/patientrow.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PhysioHome extends StatefulWidget {
   @override
@@ -12,6 +14,7 @@ class PhysioHome extends StatefulWidget {
 }
 
 class _PhysioHomeState extends State<PhysioHome> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   final AuthService _auth = AuthService();
   @override
   // build function
@@ -52,52 +55,40 @@ class _PhysioHomeState extends State<PhysioHome> {
           ),
         ],
       ),
-      body: _buildSuggestions(),
+      body: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('users')
+              .orderBy('name', descending: true)
+              .snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
+            if (!snapshots.hasData) {
+              print('this happened');
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return ListView.builder(
+                  itemCount: snapshots.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot document = snapshots.data!.docs[index];
+                    if (document.id == auth.currentUser!.uid ||
+                        (document.data() as dynamic)['userType'] ==
+                            'Physiotherapist') {
+                      return Container(height: 0);
+                    }
+                    String data =
+                        (document.data() as dynamic)['name'].toString();
+                    return Column(
+                      children: [
+                        Divider(),
+                        Container(
+                          child: BuildRow(PatientName: data),
+                        )
+                      ],
+                    );
+                  });
+            }
+          }),
     );
-  }
-
-  // build suggestions function
-  Widget _buildSuggestions() {
-    const int noOfPatients = 24; // get from firebase
-    return ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemCount: noOfPatients * 2,
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
-
-          final index = i ~/ 2; /*3*/
-
-          return BuildRow(PatientName: _getPatientName(index));
-        });
-  }
-
-  String _getPatientName(int index) {
-    var sampleNames = [
-      'Titus Ng',
-      'Roy Chua',
-      'Thomas Young',
-      'Tan Jing Heng',
-      'Lim Zhi Xiong',
-      'Bob Christenson',
-      'William Edison',
-      'Joy Serena',
-      'Dick Stacy',
-      'Yong Quan Tan',
-      'Chong Yu Le',
-      'Max Lee',
-      'Tan Kah Kee',
-      'Tan Tock Seng',
-      'Taylor Musk',
-      'Elon Swift',
-      'Fernando Muchi',
-      'Felix Pietro',
-      'Monza Costa',
-      'Chan Da Xiong',
-      'Lee Jun Er',
-      'Tamie Ng',
-      'Jaymes May',
-      'Jeremy Williamson'
-    ];
-    return sampleNames[index];
   }
 }
