@@ -69,7 +69,7 @@ class _PatientHomeState extends State<PatientHome> {
       body: FutureBuilder<dynamic>(
           future: getStuff(user!.uid),
           builder: (context, AsyncSnapshot snapshots) {
-            if((snapshots.data! as dynamic).data()["exercises"].length == 0) {
+            if ((snapshots.data! as dynamic).data()["exercises"].length == 0) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -87,36 +87,74 @@ class _PatientHomeState extends State<PatientHome> {
             } else if (snapshots.hasData) {
               String AppointmentDate =
                   (snapshots.data! as dynamic).data()["date"].toString();
+              String InjuryType =
+                  (snapshots.data! as dynamic).data()["injury"].toString();
               return RefreshIndicator(
                 onRefresh: () => _refreshData(user.uid),
-                child: ListView.builder(
-                    physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                      itemCount:
-                          (snapshots.data! as dynamic).data()["exercises"].length,
-                      itemBuilder: (context, index) {
-                        Exercise exercising;
-                        exercising = Exercise.fromMap(
-                            (snapshots.data as dynamic).data()["exercises"][index]);
-                        print(exercising.exercise);
-                        return Column(
+                child: Column(mainAxisSize: MainAxisSize.max, children: [
+                  Column(
+
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                           border: Border.all(
+                    color: Colors.teal,
+                    width: 2.0)
+                        ),
+                        child: Column(
                           children: [
-                            Divider(),
-                            Container(
-                              child: BuildExerciseRow(
-                                  exercise: exercising, userid: user.uid),
-                            )
+                            Text(
+                              "Next Appointment Date: $AppointmentDate",
+                              style: TextStyle(
+                                  fontFamily: "Circular",
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "Injury: $InjuryType",
+                              style: TextStyle(
+                                  fontFamily: "Circular",
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ],
-                        );
-                      }),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                        physics: const BouncingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics()),
+                        itemCount: (snapshots.data! as dynamic)
+                            .data()["exercises"]
+                            .length,
+                        itemBuilder: (context, index) {
+                          Exercise exercising;
+                          exercising = Exercise.fromMap(
+                              (snapshots.data as dynamic).data()["exercises"]
+                                  [index]);
+                          print(exercising.exercise);
+                          return Column(
+                            children: [
+                              Divider(),
+                              Container(
+                                child: BuildExerciseRow(
+                                    exercise: exercising, userid: user.uid),
+                              )
+                            ],
+                          );
+                        }),
+                  ),
+                ]),
               );
             } else {
               return CircularProgressIndicator();
             }
           }),
     );
-    
   }
-
 
   Future getStuff(String useruid) async {
     var docs;
@@ -130,8 +168,8 @@ class _PatientHomeState extends State<PatientHome> {
     return docs;
   }
 
-    Future _refreshData(String useruid) async {
-      await getStuff(useruid);
-      setState(() {});
-    }
+  Future _refreshData(String useruid) async {
+    await getStuff(useruid);
+    setState(() {});
+  }
 }
