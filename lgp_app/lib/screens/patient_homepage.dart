@@ -69,58 +69,37 @@ class _PatientHomeState extends State<PatientHome> {
       body: FutureBuilder<dynamic>(
           future: getStuff(user!.uid),
           builder: (context, AsyncSnapshot snapshots) {
+            String AppointmentDate =
+                (snapshots.data! as dynamic).data()["date"].toString();
+            String InjuryType =
+                (snapshots.data! as dynamic).data()["injury"].toString();
             if ((snapshots.data! as dynamic).data()["exercises"].length == 0) {
               return Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      "assets/images/no_patient_found.png",
-                      fit: BoxFit.contain,
-                      height: size.height * 0.30,
-                    ),
-                    Text("No exercises in the database"),
+                    TopContainer(AppointmentDate, InjuryType),
+                    Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/images/no_patient_found.png",
+                          fit: BoxFit.contain,
+                          height: size.height * 0.30,
+                        ),
+                        Text("No exercises in the database"),
+                      ],
+                    )),
                   ],
                 ),
               );
             } else if (snapshots.hasData) {
-              String AppointmentDate =
-                  (snapshots.data! as dynamic).data()["date"].toString();
-              String InjuryType =
-                  (snapshots.data! as dynamic).data()["injury"].toString();
               return RefreshIndicator(
                 onRefresh: () => _refreshData(user.uid),
                 child: Column(mainAxisSize: MainAxisSize.max, children: [
                   Column(
-
                     children: [
-                      Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                           border: Border.all(
-                    color: Colors.teal,
-                    width: 2.0)
-                        ),
-                        child: Column(
-                          children: [
-                            Text(
-                              "Next Appointment Date: $AppointmentDate",
-                              style: TextStyle(
-                                  fontFamily: "Circular",
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "Injury: $InjuryType",
-                              style: TextStyle(
-                                  fontFamily: "Circular",
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
+                      TopContainer(AppointmentDate, InjuryType),
                     ],
                   ),
                   Expanded(
@@ -171,5 +150,29 @@ class _PatientHomeState extends State<PatientHome> {
   Future _refreshData(String useruid) async {
     await getStuff(useruid);
     setState(() {});
+  }
+
+  Widget TopContainer(String AppointmentDate, String InjuryType) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+          border: Border.all(color: Colors.teal, width: 2.0)),
+      child: Column(
+        children: [
+          Text(
+            "Next Appointment Date: $AppointmentDate",
+            style:
+                TextStyle(fontFamily: "Circular", fontWeight: FontWeight.bold),
+          ),
+          Text(
+            "Injury: $InjuryType",
+            style:
+                TextStyle(fontFamily: "Circular", fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
   }
 }
