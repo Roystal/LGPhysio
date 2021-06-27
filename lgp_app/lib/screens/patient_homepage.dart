@@ -4,9 +4,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:lgp_app/services/auth.dart';
-import '../widgets/rounded_input_field.dart';
-import '../widgets/rounded_input_number_field.dart';
-import '../widgets/rounded_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/exercises.dart';
 import 'package:provider/provider.dart';
@@ -122,26 +119,4 @@ class _PatientHomeState extends State<PatientHome> {
   });
   return docs;
 }
-
-  Future getStuffAgain(snapshots, index) async {
-  var docs;
-  await Exercise.fromMap((snapshots.data as dynamic).data()["exercises"][index]);
-  return docs;
-}
-
-  Future<List<dynamic>> getList(String useruid) async {
-    var firestore = FirebaseFirestore.instance;
-
-    DocumentReference docRef = firestore.collection('users').doc(useruid);
-
-    return docRef.get().then((datasnapshot) {
-      if (datasnapshot.exists) {
-        List<Exercise> info =
-            (datasnapshot.data() as dynamic)['exercises'].toList();
-        print(info);
-        return info;
-      }
-      return List.filled(0, null);
-    });
-  }
 }

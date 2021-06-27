@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'CircularCountdown.dart';
+import '../models/exercises.dart';
 
 class BuildCountdown extends StatefulWidget {
   BuildCountdown(
       {required this.nameOfWorkout,
       required this.patientName,
-      required this.size});
+      required this.size,
+      required this.exercise});
   final String nameOfWorkout;
   final String patientName;
   final Size size;
+  final Exercise exercise;
   @override
   _BuildCountdownState createState() => _BuildCountdownState();
 }
@@ -19,17 +22,19 @@ class _BuildCountdownState extends State<BuildCountdown> {
 
   int _duration = 10;
   bool timerOn = false;
-  int _reps = 4;
-  int _sets = 2;
+  int _reps = 0;
+  int _sets = 0;
   @override
   Widget build(BuildContext context) {
+    _reps = int.parse(widget.exercise.reps);
+    _sets = int.parse(widget.exercise.sets);
     return Container(
         margin: EdgeInsets.only(top: widget.size.height * 0.05),
         alignment: Alignment.center,
         child: Column(children: [
-          Text('Reps: $_reps/8', style: TextStyle(fontSize: 20)),
+          Text('Reps: $_reps/$_reps', style: TextStyle(fontSize: 20)),
           Text(
-            'Sets: $_sets/3',
+            'Sets: $_sets/$_sets',
             style: TextStyle(
               fontSize: 20,
             ),

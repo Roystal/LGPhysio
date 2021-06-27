@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/screen_data.dart';
 import '../widgets/countdown_timer.dart';
+import '../models/exercises.dart';
 
 class ExercisePage extends StatefulWidget {
   static const routeName = 'ExercisePage';
@@ -19,19 +20,21 @@ class _ExercisePageState extends State<ExercisePage> {
         backgroundColor: Colors.teal[50],
         appBar: AppBar(
           backgroundColor: Colors.teal[400],
-          title: Text(args.patientName,
+          title: Text(args.exercise.exercise,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         ),
         body: MyHomePage(
-            nameOfWorkout: args.exercise,
+            nameOfWorkout: args.exercise.exercise,
             patientName: args.patientName,
-            size: size));
+            size: size,
+            exercise: args.exercise));
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage(
       {Key? key,
+      required this.exercise,
       required this.nameOfWorkout,
       required this.patientName,
       required this.size})
@@ -39,6 +42,7 @@ class MyHomePage extends StatefulWidget {
   final String nameOfWorkout;
   final String patientName;
   final Size size;
+  final Exercise exercise;
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -57,7 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
         BuildCountdown(
             size: widget.size,
             patientName: widget.patientName,
-            nameOfWorkout: widget.nameOfWorkout),
+            nameOfWorkout: widget.nameOfWorkout,
+            exercise : widget.exercise),
         // return to home page
         _buildReturnButton(),
       ],
