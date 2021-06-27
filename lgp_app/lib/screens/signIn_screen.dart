@@ -54,6 +54,7 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
                 RoundedInputField(
+                  icon: Icons.email,
                   hintText: "Email",
                   validate: (value) => value!.isEmpty ? 'Enter an email' : null,
                   onChanged: (value) {

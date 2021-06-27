@@ -41,6 +41,7 @@ class _UpdateInjuryState extends State<UpdateInjury> {
                           ),
                         ),
                         RoundedInputField(
+                          icon: Icons.personal_injury,
                           hintText: "Injury",
                           validate: (value) =>
                               value!.isEmpty ? 'Enter Injury Name/Description' : null,

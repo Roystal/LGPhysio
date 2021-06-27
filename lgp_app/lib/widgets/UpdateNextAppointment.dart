@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lgp_app/widgets/rounded_button.dart';
 import '../widgets/rounded_input_field.dart';
-import '../widgets/rounded_input_number_field.dart';
 import '../widgets/rounded_button.dart';
-import '../models/exercises.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UpdateAppointment extends StatefulWidget {
@@ -43,6 +41,7 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
                           ),
                         ),
                         RoundedInputField(
+                          icon: Icons.medication,
                           hintText: "Appointment Date",
                           validate: (value) =>
                               value!.isEmpty ? 'Enter an exercise name' : null,

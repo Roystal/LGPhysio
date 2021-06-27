@@ -94,6 +94,7 @@ class _RegisterState extends State<Register> {
                             }),
                       ),
                        RoundedInputField(
+                         icon: Icons.person,
                         hintText: "Username",
                         validate: (value) =>
                             value!.isEmpty ? 'Enter a username' : null,
@@ -102,6 +103,7 @@ class _RegisterState extends State<Register> {
                         },
                       ),
                       RoundedInputField(
+                        icon: Icons.email,
                         hintText: "Email",
                         validate: (value) =>
                             value!.isEmpty ? 'Enter an email' : null,

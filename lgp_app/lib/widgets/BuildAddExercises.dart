@@ -46,6 +46,7 @@ class _BuildAddExercisesState extends State<BuildAddExercises> {
                         ),
                         SizedBox(height: size.height * 0.02),
                         RoundedInputField(
+                          icon: Icons.fitness_center,
                           hintText: "Exercise Name",
                           validate: (value) =>
                               value!.isEmpty ? 'Enter an exercise name' : null,
@@ -54,6 +55,7 @@ class _BuildAddExercisesState extends State<BuildAddExercises> {
                           },
                         ),
                         RoundedNumberField(
+                          icon: Icons.notes,
                           hintText: "Sets",
                           validate: (value) => value!.isEmpty
                               ? 'Enter the number of sets'
@@ -63,6 +65,7 @@ class _BuildAddExercisesState extends State<BuildAddExercises> {
                           },
                         ),
                         RoundedNumberField(
+                          icon: Icons.notes,
                           hintText: "Reps",
                           validate: (value) => value!.isEmpty
                               ? 'Enter the number of reps'

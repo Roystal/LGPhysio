@@ -69,28 +69,7 @@ class _PatientHomeState extends State<PatientHome> {
       body: FutureBuilder<dynamic>(
           future: getStuff(user!.uid),
           builder: (context, AsyncSnapshot snapshots) {
-            if (snapshots.hasData) {
-              String AppointmentDate =
-                  (snapshots.data! as dynamic).data()["date"].toString();
-              return ListView.builder(
-                  itemCount:
-                      (snapshots.data! as dynamic).data()["exercises"].length,
-                  itemBuilder: (context, index) {
-                    Exercise exercising;
-                    exercising = Exercise.fromMap(
-                        (snapshots.data as dynamic).data()["exercises"][index]);
-                    print(exercising.exercise);
-                    return Column(
-                      children: [
-                        Divider(),
-                        Container(
-                          child: BuildExerciseRow(
-                              exercise: exercising, userid: user.uid),
-                        )
-                      ],
-                    );
-                  });
-            } else {
+            if((snapshots.data! as dynamic).data()["exercises"].length == 0) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -105,10 +84,35 @@ class _PatientHomeState extends State<PatientHome> {
                   ],
                 ),
               );
+            } else if (snapshots.hasData) {
+              String AppointmentDate =
+                  (snapshots.data! as dynamic).data()["date"].toString();
+              return ListView.builder(
+                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                    itemCount:
+                        (snapshots.data! as dynamic).data()["exercises"].length,
+                    itemBuilder: (context, index) {
+                      Exercise exercising;
+                      exercising = Exercise.fromMap(
+                          (snapshots.data as dynamic).data()["exercises"][index]);
+                      print(exercising.exercise);
+                      return Column(
+                        children: [
+                          Divider(),
+                          Container(
+                            child: BuildExerciseRow(
+                                exercise: exercising, userid: user.uid),
+                          )
+                        ],
+                      );
+                    });
+            } else {
+              return CircularProgressIndicator();
             }
           }),
     );
   }
+
 
   Future getStuff(String useruid) async {
     var docs;

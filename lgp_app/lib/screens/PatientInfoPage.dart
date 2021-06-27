@@ -5,6 +5,8 @@ import 'dart:math';
 import '../widgets/UpdateNextAppointment.dart';
 import '../widgets/UpdateInjury.dart';
 
+
+
 class PatientInfoPage extends StatefulWidget {
   static const routeName = '/second';
   @override
@@ -25,12 +27,14 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
             args.patientName,
           ),
         ),
-        body: MyHomePage(
-            patientName: args.patientName,
-            size: size,
-            useruid: args.useruid,
-            appointmentDate: args.appointmentDate,
-            injuryInput: args.injuryInput));
+        body: SingleChildScrollView(
+          child: MyHomePage(
+              patientName: args.patientName,
+              size: size,
+              useruid: args.useruid,
+              appointmentDate: args.appointmentDate,
+              injuryInput: args.injuryInput),
+        ));
   }
 }
 
