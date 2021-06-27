@@ -23,15 +23,16 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
             args.patientName,
           ),
         ),
-        body: MyHomePage(patientName: args.patientName, size: size));
+        body: MyHomePage(patientName: args.patientName, size: size, useruid: args.useruid));
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.patientName, required this.size})
+  const MyHomePage({Key? key, required this.patientName, required this.size, required this.useruid})
       : super(key: key);
   final String patientName;
   final Size size;
+  final String useruid;
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -51,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
         _buildInjuryContainer(widget.size),
 
         // Add Exercises button
-        BuildAddExercises(),
+        BuildAddExercises(useruid: widget.useruid),
         // return to home page
         _buildReturnButton(),
       ],

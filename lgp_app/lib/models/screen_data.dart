@@ -1,5 +1,6 @@
 class ScreenArguments {
   final String patientName;
   final String exercise;
-  ScreenArguments(this.patientName, this.exercise);
+  final String useruid;
+  ScreenArguments(this.patientName, this.exercise, this.useruid);
 }

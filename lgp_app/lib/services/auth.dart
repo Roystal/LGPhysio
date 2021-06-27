@@ -58,7 +58,7 @@ return document.data["userType"];
           email: email, password: password);
       User? user = result.user;
       //create a new document with the user with the uid
-      await DatabaseService(uid: user!.uid).updateUserData(name: username, userType: userType);
+      await DatabaseService(uid: user!.uid).updateUserData(name: username, userType: userType, useruid: user.uid);
       return _CreateUser(user);
     } catch (e) {
       print(e.toString());

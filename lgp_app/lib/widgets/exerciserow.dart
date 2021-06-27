@@ -1,26 +1,29 @@
 import '../screens/exercisepage.dart';
-import 'package:lgp_app/services/auth.dart';
 import '../models/screen_data.dart';
-import 'dart:math';
 import 'package:flutter/material.dart';
+import '../models/exercises.dart';
+import 'package:provider/provider.dart';
+import 'package:lgp_app/models/custom_user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class BuildRow extends StatelessWidget {
-  final exercise;
-  BuildRow({required this.exercise});
+class BuildExerciseRow extends StatelessWidget {
+  final Exercise exercise;
+  final String userid;
+  BuildExerciseRow({required this.exercise, required this.userid});
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
         print('Item $exercise was tapped!');
         Navigator.pushNamed(context, ExercisePage.routeName,
-            arguments: ScreenArguments('Sample Patient Name', exercise));
+            arguments: ScreenArguments("dummy", exercise.exercise, this.userid));
       },
       leading: Icon(Icons.album, color: Colors.teal[800]),
       title: Text(
-        exercise,
+        exercise.exercise,
       ),
       subtitle: Text(
-          'Reps: ${Random().nextInt(10) + 5}, Sets: ${Random().nextInt(4) + 1}'),
+          'Reps: ${exercise.reps}, Sets: ${exercise.sets}'),
     );
   }
 }

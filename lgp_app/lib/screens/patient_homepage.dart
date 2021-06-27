@@ -3,10 +3,16 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import '../screens/exercisepage.dart';
 import 'package:lgp_app/services/auth.dart';
-import '../models/screen_data.dart';
-import 'dart:math';
+import '../widgets/rounded_input_field.dart';
+import '../widgets/rounded_input_number_field.dart';
+import '../widgets/rounded_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../models/exercises.dart';
+import 'package:provider/provider.dart';
+import 'package:lgp_app/models/custom_user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../widgets/exerciserow.dart';
 
 class PatientHome extends StatefulWidget {
   @override
@@ -14,11 +20,14 @@ class PatientHome extends StatefulWidget {
 }
 
 class _PatientHomeState extends State<PatientHome> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   final AuthService _auth = AuthService();
   final _biggerFont = TextStyle(fontSize: 18.0);
   @override
   // build function
   Widget build(BuildContext context) {
+    final user = Provider.of<CustomUser?>(context);
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.teal[50],
       appBar: AppBar(
@@ -61,57 +70,78 @@ class _PatientHomeState extends State<PatientHome> {
         ),
         */
       ),
-      body: _buildSuggestions(),
+      body: FutureBuilder<dynamic>(
+          future: getStuff(user!.uid),
+          builder: (context, AsyncSnapshot snapshots) {
+            if (snapshots.hasData) {
+              return ListView.builder(
+                  itemCount:
+                      (snapshots.data! as dynamic).data()["exercises"].length,
+                  itemBuilder: (context, index) {
+                    Exercise exercising;
+                    exercising = Exercise.fromMap((snapshots.data as dynamic).data()["exercises"][index]);
+                    print(exercising.exercise);
+                    return Column(
+                      children: [
+                        Divider(),
+                        Container(
+                          child: BuildExerciseRow(
+                              exercise: exercising, userid: user.uid),
+                        )
+                      ],
+                    );
+                  });
+             }
+             else { return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/images/no_patient_found.png",
+                      fit: BoxFit.contain,
+                      height: size.height * 0.30,
+                    ),
+                    Text("No exercises in the database"),
+                  ],
+                ),
+              );
+            } 
+          }),
     );
   }
 
-  // build suggestions function
-  Widget _buildSuggestions() {
-    return ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
+  Future getStuff(String useruid) async {
+  var docs;
+  await FirebaseFirestore.instance
+              .collection("users")
+              .doc(useruid)
+              .get()
+      .then((querySnapshot) {
+    docs = querySnapshot;
+  });
+  return docs;
+}
 
-          final index = i ~/ 2; /*3*/
+  Future getStuffAgain(snapshots, index) async {
+  var docs;
+  await Exercise.fromMap((snapshots.data as dynamic).data()["exercises"][index]);
+  return docs;
+}
 
-          return _buildRow(_getNameOfWorkout(), index);
-        });
-  }
+  Future<List<dynamic>> getList(String useruid) async {
+    var firestore = FirebaseFirestore.instance;
 
-  String _getNameOfWorkout() {
-    var sampleExercises = [
-      'Hamstring Stretch',
-      'Calf Stretch',
-      'Knee extension',
-      'Calf raises',
-      'Quad Stretch',
-      'Single leg Bulgarian Squat',
-      'Double leg Squat',
-      'Lunges (both legs)',
-      'Double leg box jumps (20cm)',
-      'Single leg Bridging',
-      'Single leg Hamstring Curl',
-      'Single leg Leg Press',
-      'Bending Stretch (90 degrees)'
-    ];
-    return sampleExercises[Random().nextInt(sampleExercises.length)];
-  }
+    DocumentReference docRef = firestore.collection('users').doc(useruid);
 
-  // build row function
-  Widget _buildRow(String exercise, int index) {
-    return ListTile(
-      onTap: () {
-        print('Item $exercise was tapped!');
-        Navigator.pushNamed(this.context, ExercisePage.routeName,
-            arguments: ScreenArguments('Sample Patient Name', exercise));
-      },
-      leading: Icon(Icons.album, color: Colors.teal[800]),
-      title: Text(
-        exercise,
-        style: _biggerFont,
-      ),
-      subtitle: Text(
-          'Reps: ${Random().nextInt(10) + 5}, Sets: ${Random().nextInt(4) + 1}'),
-    );
+    return docRef.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        List<Exercise> info =
+            (datasnapshot.data() as dynamic)['exercises'].toList();
+        print(info);
+        return info;
+      }
+      return List.filled(0, null);
+    });
   }
 }

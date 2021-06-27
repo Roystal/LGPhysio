@@ -5,14 +5,15 @@ import 'package:flutter/material.dart';
 
 class BuildRow extends StatelessWidget {
   final PatientName;
-  BuildRow({required this.PatientName});
+  final useruid;
+  BuildRow({required this.PatientName, required this.useruid});
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
         print('Item $PatientName was tapped!');
         Navigator.pushNamed(context, PatientInfoPage.routeName,
-            arguments: ScreenArguments(PatientName, 'dummy'));
+            arguments: ScreenArguments(PatientName, 'dummy',useruid));
       },
       leading: Icon(Icons.album, color: Colors.teal[800]),
       title: Text(
