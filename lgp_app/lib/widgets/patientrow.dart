@@ -7,7 +7,8 @@ import '../models/exercises.dart';
 class BuildRow extends StatelessWidget {
   final PatientName;
   final useruid;
-  BuildRow({required this.PatientName, required this.useruid});
+  final appointmentDate;
+  BuildRow({required this.PatientName, required this.useruid, required this.appointmentDate});
   @override
   Widget build(BuildContext context) {
     Exercise exercising = Exercise("dummy", "dummy", "dummy");
@@ -15,14 +16,14 @@ class BuildRow extends StatelessWidget {
       onTap: () {
         print('Item $PatientName was tapped!');
         Navigator.pushNamed(context, PatientInfoPage.routeName,
-            arguments: ScreenArguments(PatientName, exercising ,useruid));
+            arguments: ScreenArguments(PatientName, exercising ,useruid, appointmentDate));
       },
       leading: Icon(Icons.album, color: Colors.teal[800]),
       title: Text(
         PatientName,
       ),
       subtitle: Text(
-          'Reps: ${Random().nextInt(10) + 5}, Sets: ${Random().nextInt(4) + 1}'),
+          'Next Appointment Date: $appointmentDate'),
     );
   }
 }

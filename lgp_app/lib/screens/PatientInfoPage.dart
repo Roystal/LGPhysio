@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/screen_data.dart';
 import '../widgets/BuildAddExercises.dart';
 import 'dart:math';
+import '../widgets/UpdateNextAppointment.dart';
 
 class PatientInfoPage extends StatefulWidget {
   static const routeName = '/second';
@@ -23,16 +24,23 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
             args.patientName,
           ),
         ),
-        body: MyHomePage(patientName: args.patientName, size: size, useruid: args.useruid));
+        body: MyHomePage(
+            patientName: args.patientName, size: size, useruid: args.useruid, appointmentDate: args.appointmentDate,));
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.patientName, required this.size, required this.useruid})
+  const MyHomePage(
+      {Key? key,
+      required this.patientName,
+      required this.size,
+      required this.useruid,
+      required this.appointmentDate})
       : super(key: key);
   final String patientName;
   final Size size;
   final String useruid;
+  final String appointmentDate;
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -46,13 +54,19 @@ class _MyHomePageState extends State<MyHomePage> {
         // Patient image
         _buildImageContainer(widget.size),
         // Next appointment
-        _buildNextAppointmentContainer(widget.patientName),
+        _buildNextAppointmentContainer(widget.appointmentDate),
 
         // Type and duration from injury
         _buildInjuryContainer(widget.size),
 
         // Add Exercises button
         BuildAddExercises(useruid: widget.useruid),
+
+        SizedBox(height: 20,),
+
+        // Update Appointment Date button
+        UpdateAppointment(useruid: widget.useruid),
+
         // return to home page
         _buildReturnButton(),
       ],
@@ -69,11 +83,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 
-  Container _buildNextAppointmentContainer(String patientName) {
+  Container _buildNextAppointmentContainer(String appointmentDate) {
     return Container(
       alignment: Alignment.center,
       child: Text(
-        'Next Appointment: ${Random().nextInt(30) + 1}/${Random().nextInt(11) + 1}/2021',
+        'Next Appointment: $appointmentDate',
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );

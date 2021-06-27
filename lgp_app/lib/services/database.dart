@@ -7,6 +7,7 @@ class DatabaseService {
   String userType = "";
   List<dynamic> exercises = [];
   String useruid = "";
+  String date = "";
 
   DatabaseService({required this.uid});
 
@@ -21,6 +22,7 @@ class DatabaseService {
       'name': name,
       'useruid': useruid,
       'exercises': this.exercises,
+      'date' : "Not Confirmed",
     });
   }
 
@@ -28,12 +30,4 @@ class DatabaseService {
   Stream<QuerySnapshot> get users {
     return userCollection.snapshots();
   }
-
-  DatabaseService.fromMap(Map<dynamic, dynamic> map)
-      : name = map['name'],
-        uid = map['uid'],
-        userType = map['userType'],
-        exercises = map['exercises'].map((set) {
-          return Exercise.fromMap(set);
-        }).toList();
 }
