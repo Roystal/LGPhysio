@@ -13,7 +13,9 @@ class PhysioHome extends StatefulWidget {
   _PhysioHomeState createState() => _PhysioHomeState();
 }
 
+
 class _PhysioHomeState extends State<PhysioHome> {
+
   FirebaseAuth auth = FirebaseAuth.instance;
   final AuthService _auth = AuthService();
   @override
@@ -56,12 +58,12 @@ class _PhysioHomeState extends State<PhysioHome> {
           ),
         ],
       ),
-      body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
+      body: FutureBuilder(
+          future: FirebaseFirestore.instance
               .collection('users')
               .orderBy('name', descending: true)
-              .snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
+              .get(),
+          builder: (context, AsyncSnapshot snapshots) {
             if (!snapshots.hasData) {
               return Center(
                 child: Column(
@@ -78,39 +80,58 @@ class _PhysioHomeState extends State<PhysioHome> {
                 ),
               );
             } else {
-              return ListView.builder(
-                  itemCount: snapshots.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    DocumentSnapshot document = snapshots.data!.docs[index];
-                    if (document.id == auth.currentUser!.uid ||
-                        (document.data() as dynamic)['userType'] ==
-                            'Physiotherapist') {
-                      return Container(height: 0);
-                    }
-                    String data =
-                        (document.data() as dynamic)['name'].toString();
-                    String useruid =
-                        (document.data() as dynamic)['useruid'].toString();
-                    String appointment =
-                        (document.data() as dynamic)['date'].toString();
-                    String injuryInput =
-                        (document.data() as dynamic)['injury'].toString();
-                        
-                    return Column(
-                      children: [
-                        Divider(),
-                        Container(
-                          child: BuildRow(
-                              PatientName: data,
-                              useruid: useruid,
-                              appointmentDate: appointment,
-                              injuryInput: injuryInput),
-                        )
-                      ],
-                    );
-                  });
+              return RefreshIndicator(
+                onRefresh: _refreshData,
+                child: ListView.builder(
+                    itemCount: snapshots.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      DocumentSnapshot document = snapshots.data!.docs[index];
+                      if (document.id == auth.currentUser!.uid ||
+                          (document.data() as dynamic)['userType'] ==
+                              'Physiotherapist') {
+                        return Container(height: 0);
+                      }
+                      String data =
+                          (document.data() as dynamic)['name'].toString();
+                      String useruid =
+                          (document.data() as dynamic)['useruid'].toString();
+                      String appointment =
+                          (document.data() as dynamic)['date'].toString();
+                      String injuryInput =
+                          (document.data() as dynamic)['injury'].toString();
+              
+                      return Column(
+                        children: [
+                          Divider(),
+                          Container(
+                            child: BuildRow(
+                                PatientName: data,
+                                useruid: useruid,
+                                appointmentDate: appointment,
+                                injuryInput: injuryInput),
+                          )
+                        ],
+                      );
+                    }),
+              );
             }
           }),
     );
   }
+
+  Future getStuff() async {
+    var docs;
+    await FirebaseFirestore.instance
+              .collection('users')
+              .orderBy('name', descending: true)
+              .get()
+        .then((querySnapshot) {
+      docs = querySnapshot;
+    });
+    return docs;
+  }
+      Future _refreshData() async {
+      await getStuff();
+      setState(() {});
+    }
 }

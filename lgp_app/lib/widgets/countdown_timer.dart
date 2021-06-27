@@ -4,7 +4,7 @@ import 'CircularCountdown.dart';
 import '../models/exercises.dart';
 import 'package:provider/provider.dart';
 import 'package:lgp_app/models/custom_user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BuildCountdown extends StatefulWidget {
   BuildCountdown(
@@ -75,7 +75,15 @@ class _BuildCountdownState extends State<BuildCountdown> {
                     _controller.start();
                     _controller.pause();
                   }
-                });
+                   /*FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(user!.uid)
+                                  .update({
+                                "exercises":
+                                    injury,
+                              });*/
+                }
+                );
               }),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

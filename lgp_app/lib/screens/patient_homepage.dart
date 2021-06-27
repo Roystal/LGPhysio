@@ -87,30 +87,34 @@ class _PatientHomeState extends State<PatientHome> {
             } else if (snapshots.hasData) {
               String AppointmentDate =
                   (snapshots.data! as dynamic).data()["date"].toString();
-              return ListView.builder(
-                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                    itemCount:
-                        (snapshots.data! as dynamic).data()["exercises"].length,
-                    itemBuilder: (context, index) {
-                      Exercise exercising;
-                      exercising = Exercise.fromMap(
-                          (snapshots.data as dynamic).data()["exercises"][index]);
-                      print(exercising.exercise);
-                      return Column(
-                        children: [
-                          Divider(),
-                          Container(
-                            child: BuildExerciseRow(
-                                exercise: exercising, userid: user.uid),
-                          )
-                        ],
-                      );
-                    });
+              return RefreshIndicator(
+                onRefresh: () => _refreshData(user.uid),
+                child: ListView.builder(
+                    physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                      itemCount:
+                          (snapshots.data! as dynamic).data()["exercises"].length,
+                      itemBuilder: (context, index) {
+                        Exercise exercising;
+                        exercising = Exercise.fromMap(
+                            (snapshots.data as dynamic).data()["exercises"][index]);
+                        print(exercising.exercise);
+                        return Column(
+                          children: [
+                            Divider(),
+                            Container(
+                              child: BuildExerciseRow(
+                                  exercise: exercising, userid: user.uid),
+                            )
+                          ],
+                        );
+                      }),
+              );
             } else {
               return CircularProgressIndicator();
             }
           }),
     );
+    
   }
 
 
@@ -125,4 +129,9 @@ class _PatientHomeState extends State<PatientHome> {
     });
     return docs;
   }
+
+    Future _refreshData(String useruid) async {
+      await getStuff(useruid);
+      setState(() {});
+    }
 }
