@@ -4,7 +4,6 @@ import '../widgets/rounded_input_field.dart';
 import '../widgets/rounded_password_field.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/already_have_account.dart';
-import '../widgets/sign_in_anon.dart';
 import '../widgets/loading.dart';
 
 class SignIn extends StatefulWidget {

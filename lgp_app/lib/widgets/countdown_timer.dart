@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'CircularCountdown.dart';
 import '../models/exercises.dart';
+import 'package:provider/provider.dart';
+import 'package:lgp_app/models/custom_user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class BuildCountdown extends StatefulWidget {
   BuildCountdown(
@@ -24,17 +27,27 @@ class _BuildCountdownState extends State<BuildCountdown> {
   bool timerOn = false;
   int _reps = 0;
   int _sets = 0;
+  int initialreps = 0;
+  int initialsets = 0;
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    initialreps = int.parse(widget.exercise.reps);
+    initialsets = int.parse(widget.exercise.sets);
     _reps = int.parse(widget.exercise.reps);
     _sets = int.parse(widget.exercise.sets);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final user = Provider.of<CustomUser?>(context);
     return Container(
         margin: EdgeInsets.only(top: widget.size.height * 0.05),
         alignment: Alignment.center,
         child: Column(children: [
-          Text('Reps: $_reps/$_reps', style: TextStyle(fontSize: 20)),
+          Text('Reps: $_reps/$initialreps', style: TextStyle(fontSize: 20)),
           Text(
-            'Sets: $_sets/$_sets',
+            'Sets: $_sets/$initialsets',
             style: TextStyle(
               fontSize: 20,
             ),
@@ -44,10 +57,24 @@ class _BuildCountdownState extends State<BuildCountdown> {
               controller: _controller,
               onTimerend: () {
                 setState(() {
-                  _reps -= 1;
-                  timerOn = false;
-                  _controller.start();
-                  _controller.pause();
+                  if (_reps == 1 && _sets > 1) {
+                    _reps = initialreps;
+                    _sets -= 1;
+                    timerOn = false;
+                    _controller.start();
+                    _controller.pause();
+                  } else if (_reps > 1 && _sets >= 1) {
+                    _reps -= 1;
+                    timerOn = false;
+                    _controller.start();
+                    _controller.pause();
+                  } else {
+                    _reps = initialreps;
+                    _sets = initialsets;
+                    timerOn = false;
+                    _controller.start();
+                    _controller.pause();
+                  }
                 });
               }),
           Row(

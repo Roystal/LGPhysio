@@ -19,7 +19,6 @@ class PatientHome extends StatefulWidget {
 class _PatientHomeState extends State<PatientHome> {
   FirebaseAuth auth = FirebaseAuth.instance;
   final AuthService _auth = AuthService();
-  final _biggerFont = TextStyle(fontSize: 18.0);
   @override
   // build function
   Widget build(BuildContext context) {

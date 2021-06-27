@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lgp_app/widgets/rounded_button.dart';
-import 'package:provider/provider.dart';
-import 'package:lgp_app/models/custom_user.dart';
 import '../widgets/rounded_input_field.dart';
 import '../widgets/rounded_input_number_field.dart';
 import '../widgets/rounded_button.dart';
@@ -19,7 +17,6 @@ class _BuildAddExercisesState extends State<BuildAddExercises> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final user = Provider.of<CustomUser?>(context);
     return Container(
         child: RoundedButton(
             text: 'Add exercise',
