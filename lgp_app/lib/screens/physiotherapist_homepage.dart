@@ -93,11 +93,18 @@ class _PhysioHomeState extends State<PhysioHome> {
                         (document.data() as dynamic)['useruid'].toString();
                     String appointment =
                         (document.data() as dynamic)['date'].toString();
+                    String injuryInput =
+                        (document.data() as dynamic)['injury'].toString();
+                        
                     return Column(
                       children: [
                         Divider(),
                         Container(
-                          child: BuildRow(PatientName: data, useruid: useruid, appointmentDate : appointment),
+                          child: BuildRow(
+                              PatientName: data,
+                              useruid: useruid,
+                              appointmentDate: appointment,
+                              injuryInput: injuryInput),
                         )
                       ],
                     );

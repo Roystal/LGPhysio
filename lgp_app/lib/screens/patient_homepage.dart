@@ -70,12 +70,15 @@ class _PatientHomeState extends State<PatientHome> {
           future: getStuff(user!.uid),
           builder: (context, AsyncSnapshot snapshots) {
             if (snapshots.hasData) {
+              String AppointmentDate =
+                  (snapshots.data! as dynamic).data()["date"].toString();
               return ListView.builder(
                   itemCount:
                       (snapshots.data! as dynamic).data()["exercises"].length,
                   itemBuilder: (context, index) {
                     Exercise exercising;
-                    exercising = Exercise.fromMap((snapshots.data as dynamic).data()["exercises"][index]);
+                    exercising = Exercise.fromMap(
+                        (snapshots.data as dynamic).data()["exercises"][index]);
                     print(exercising.exercise);
                     return Column(
                       children: [
@@ -87,8 +90,8 @@ class _PatientHomeState extends State<PatientHome> {
                       ],
                     );
                   });
-             }
-             else { return Center(
+            } else {
+              return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -102,20 +105,20 @@ class _PatientHomeState extends State<PatientHome> {
                   ],
                 ),
               );
-            } 
+            }
           }),
     );
   }
 
   Future getStuff(String useruid) async {
-  var docs;
-  await FirebaseFirestore.instance
-              .collection("users")
-              .doc(useruid)
-              .get()
-      .then((querySnapshot) {
-    docs = querySnapshot;
-  });
-  return docs;
-}
+    var docs;
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(useruid)
+        .get()
+        .then((querySnapshot) {
+      docs = querySnapshot;
+    });
+    return docs;
+  }
 }

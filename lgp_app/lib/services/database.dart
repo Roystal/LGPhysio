@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/exercises.dart';
 
 class DatabaseService {
   final String uid;
@@ -8,6 +7,7 @@ class DatabaseService {
   List<dynamic> exercises = [];
   String useruid = "";
   String date = "";
+  String injury = "";
 
   DatabaseService({required this.uid});
 
@@ -23,6 +23,7 @@ class DatabaseService {
       'useruid': useruid,
       'exercises': this.exercises,
       'date' : "Not Confirmed",
+      'injury' : "Not Added Yet",
     });
   }
 

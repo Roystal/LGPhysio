@@ -13,7 +13,7 @@ class BuildExerciseRow extends StatelessWidget {
       onTap: () {
         print('Item $exercise was tapped!');
         Navigator.pushNamed(context, ExercisePage.routeName,
-            arguments: ScreenArguments("dummy", exercise, this.userid, "dummy"));
+            arguments: ScreenArguments("dummy", exercise, this.userid, "dummy", "dummy"));
       },
       leading: Icon(Icons.album, color: Colors.teal[800]),
       title: Text(

@@ -8,7 +8,8 @@ class BuildRow extends StatelessWidget {
   final PatientName;
   final useruid;
   final appointmentDate;
-  BuildRow({required this.PatientName, required this.useruid, required this.appointmentDate});
+  final injuryInput;
+  BuildRow({required this.PatientName, required this.useruid, required this.appointmentDate, required this.injuryInput});
   @override
   Widget build(BuildContext context) {
     Exercise exercising = Exercise("dummy", "dummy", "dummy");
@@ -16,7 +17,7 @@ class BuildRow extends StatelessWidget {
       onTap: () {
         print('Item $PatientName was tapped!');
         Navigator.pushNamed(context, PatientInfoPage.routeName,
-            arguments: ScreenArguments(PatientName, exercising ,useruid, appointmentDate));
+            arguments: ScreenArguments(PatientName, exercising ,useruid, appointmentDate, injuryInput));
       },
       leading: Icon(Icons.album, color: Colors.teal[800]),
       title: Text(

@@ -3,6 +3,7 @@ import '../models/screen_data.dart';
 import '../widgets/BuildAddExercises.dart';
 import 'dart:math';
 import '../widgets/UpdateNextAppointment.dart';
+import '../widgets/UpdateInjury.dart';
 
 class PatientInfoPage extends StatefulWidget {
   static const routeName = '/second';
@@ -25,7 +26,11 @@ class _PatientInfoPageState extends State<PatientInfoPage> {
           ),
         ),
         body: MyHomePage(
-            patientName: args.patientName, size: size, useruid: args.useruid, appointmentDate: args.appointmentDate,));
+            patientName: args.patientName,
+            size: size,
+            useruid: args.useruid,
+            appointmentDate: args.appointmentDate,
+            injuryInput: args.injuryInput));
   }
 }
 
@@ -35,12 +40,14 @@ class MyHomePage extends StatefulWidget {
       required this.patientName,
       required this.size,
       required this.useruid,
-      required this.appointmentDate})
+      required this.appointmentDate,
+      required this.injuryInput})
       : super(key: key);
   final String patientName;
   final Size size;
   final String useruid;
   final String appointmentDate;
+  final String injuryInput;
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -57,15 +64,24 @@ class _MyHomePageState extends State<MyHomePage> {
         _buildNextAppointmentContainer(widget.appointmentDate),
 
         // Type and duration from injury
-        _buildInjuryContainer(widget.size),
+        _buildInjuryContainer(widget.size, widget.injuryInput),
 
         // Add Exercises button
         BuildAddExercises(useruid: widget.useruid),
 
-        SizedBox(height: 20,),
+        SizedBox(
+          height: 20,
+        ),
 
         // Update Appointment Date button
         UpdateAppointment(useruid: widget.useruid),
+
+        SizedBox(
+          height: 20,
+        ),
+
+        // Update Injury button
+        UpdateInjury(useruid: widget.useruid),
 
         // return to home page
         _buildReturnButton(),
@@ -94,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // get injury information from backend
-  Container _buildInjuryContainer(Size size) {
+  Container _buildInjuryContainer(Size size, String injury) {
     return Container(
         margin: EdgeInsets.only(
             top: size.height * 0.05, bottom: size.height * 0.05),
@@ -107,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   left: size.width * 0.10,
                   bottom: size.height * 0.04),
               child: Text(
-                'ACL reconstruction Right Knee, lateral meniscus tear',
+                injury.toString(),
                 style: TextStyle(
                   fontSize: 20,
                 ),
