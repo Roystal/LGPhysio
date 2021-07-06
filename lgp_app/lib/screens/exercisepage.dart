@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/screen_data.dart';
 import '../widgets/countdown_timer.dart';
 import '../models/exercises.dart';
+import '../widgets/clicker_widget.dart';
 
 class ExercisePage extends StatefulWidget {
   static const routeName = 'ExercisePage';
@@ -12,8 +13,7 @@ class ExercisePage extends StatefulWidget {
 class _ExercisePageState extends State<ExercisePage> {
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -58,11 +58,17 @@ class _MyHomePageState extends State<MyHomePage> {
         // name of workout
         _buildNameOfWorkoutContainer(widget.nameOfWorkout),
 
-        BuildCountdown(
-            size: widget.size,
-            patientName: widget.patientName,
-            nameOfWorkout: widget.nameOfWorkout,
-            exercise : widget.exercise),
+        widget.exercise.type == "Timed Exercise"
+            ? BuildCountdown(
+                size: widget.size,
+                patientName: widget.patientName,
+                nameOfWorkout: widget.nameOfWorkout,
+                exercise: widget.exercise)
+            : Clicker(
+                size: widget.size,
+                patientName: widget.patientName,
+                nameOfWorkout: widget.nameOfWorkout,
+                exercise: widget.exercise),
         // return to home page
         _buildReturnButton(),
       ],

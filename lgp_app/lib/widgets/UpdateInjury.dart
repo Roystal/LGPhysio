@@ -40,16 +40,18 @@ class _UpdateInjuryState extends State<UpdateInjury> {
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
+                        SizedBox(height: size.height * 0.02),
                         RoundedInputField(
                           icon: Icons.personal_injury,
                           hintText: "Injury",
-                          validate: (value) =>
-                              value!.isEmpty ? 'Enter Injury Name/Description' : null,
+                          validate: (value) => value!.isEmpty
+                              ? 'Enter Injury Name/Description'
+                              : null,
                           onChanged: (value) {
                             setState(() => injury = value);
                           },
                         ),
-                        SizedBox(height: size.height * 0.04),
+                        SizedBox(height: size.height * 0.03),
                         RoundedButton(
                             text: "UPDATE",
                             press: () {
@@ -57,8 +59,7 @@ class _UpdateInjuryState extends State<UpdateInjury> {
                                   .collection("users")
                                   .doc(widget.useruid)
                                   .update({
-                                "injury":
-                                    injury,
+                                "injury": injury,
                               });
                               Navigator.pop(context);
                               return showDialog(
@@ -66,7 +67,8 @@ class _UpdateInjuryState extends State<UpdateInjury> {
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       title: Text("Success!"),
-                                      content: Text("Patient Injury is : $injury"),
+                                      content:
+                                          Text("Patient Injury is : $injury"),
                                       actions: [
                                         TextButton(
                                             onPressed: () {

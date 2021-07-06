@@ -40,6 +40,7 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
+                        SizedBox(height: size.height * 0.02),
                         RoundedInputField(
                           icon: Icons.medication,
                           hintText: "Appointment Date",
@@ -49,7 +50,7 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
                             setState(() => date = value);
                           },
                         ),
-                        SizedBox(height: size.height * 0.04),
+                        SizedBox(height: size.height * 0.03),
                         RoundedButton(
                             text: "UPDATE",
                             press: () {
@@ -57,8 +58,7 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
                                   .collection("users")
                                   .doc(widget.useruid)
                                   .update({
-                                "date":
-                                    date,
+                                "date": date,
                               });
                               Navigator.pop(context);
                               return showDialog(
@@ -66,7 +66,8 @@ class _UpdateAppointmentState extends State<UpdateAppointment> {
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       title: Text("Success!"),
-                                      content: Text("Date has been updated to : $date"),
+                                      content: Text(
+                                          "Date has been updated to : $date"),
                                       actions: [
                                         TextButton(
                                             onPressed: () {

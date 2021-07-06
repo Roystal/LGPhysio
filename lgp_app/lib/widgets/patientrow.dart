@@ -12,7 +12,7 @@ class BuildRow extends StatelessWidget {
   BuildRow({required this.PatientName, required this.useruid, required this.appointmentDate, required this.injuryInput});
   @override
   Widget build(BuildContext context) {
-    Exercise exercising = Exercise("dummy", "dummy", "dummy");
+    Exercise exercising = Exercise("dummy", "dummy", "dummy", "dummy");
     return ListTile(
       onTap: () {
         print('Item $PatientName was tapped!');

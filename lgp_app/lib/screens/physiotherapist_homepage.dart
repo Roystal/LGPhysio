@@ -7,15 +7,14 @@ import 'package:lgp_app/services/auth.dart';
 import '../widgets/patientrow.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../widgets/loading.dart';
 
 class PhysioHome extends StatefulWidget {
   @override
   _PhysioHomeState createState() => _PhysioHomeState();
 }
 
-
 class _PhysioHomeState extends State<PhysioHome> {
-
   FirebaseAuth auth = FirebaseAuth.instance;
   final AuthService _auth = AuthService();
   @override
@@ -64,7 +63,9 @@ class _PhysioHomeState extends State<PhysioHome> {
               .orderBy('name', descending: true)
               .get(),
           builder: (context, AsyncSnapshot snapshots) {
-            if (!snapshots.hasData) {
+            if (snapshots.connectionState == ConnectionState.waiting) {
+              return Loading();
+            } else if (!snapshots.hasData) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +100,7 @@ class _PhysioHomeState extends State<PhysioHome> {
                           (document.data() as dynamic)['date'].toString();
                       String injuryInput =
                           (document.data() as dynamic)['injury'].toString();
-              
+
                       return Column(
                         children: [
                           Divider(),
@@ -122,16 +123,17 @@ class _PhysioHomeState extends State<PhysioHome> {
   Future getStuff() async {
     var docs;
     await FirebaseFirestore.instance
-              .collection('users')
-              .orderBy('name', descending: true)
-              .get()
+        .collection('users')
+        .orderBy('name', descending: true)
+        .get()
         .then((querySnapshot) {
       docs = querySnapshot;
     });
     return docs;
   }
-      Future _refreshData() async {
-      await getStuff();
-      setState(() {});
-    }
+
+  Future _refreshData() async {
+    await getStuff();
+    setState(() {});
+  }
 }
