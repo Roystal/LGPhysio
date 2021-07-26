@@ -4,7 +4,6 @@ import 'CircularCountdown.dart';
 import '../models/exercises.dart';
 import 'package:provider/provider.dart';
 import 'package:lgp_app/models/custom_user.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BuildCountdown extends StatefulWidget {
   BuildCountdown(

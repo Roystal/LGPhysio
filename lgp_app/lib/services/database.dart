@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lgp_app/models/exercises.dart';
 
 class DatabaseService {
   final String uid;
   String name = "";
   String userType = "";
-  List<dynamic> exercises = [];
+  List<Exercise> exercises = [];
   String useruid = "";
   String date = "";
   String injury = "";

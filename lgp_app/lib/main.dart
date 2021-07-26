@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:lgp_app/screens/PatientInfoPage.dart';
+import 'package:lgp_app/screens/deleteeditexercise.dart';
 import 'package:lgp_app/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'services/auth.dart';
@@ -31,6 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
         routes: {
           ExercisePage.routeName: (context) => ExercisePage(),
           PatientInfoPage.routeName: (context) => PatientInfoPage(),
+          EditableExercise.routeName: (context) => EditableExercise()
         },
         title: "Let's Get Physio-cal",
         theme: ThemeData(

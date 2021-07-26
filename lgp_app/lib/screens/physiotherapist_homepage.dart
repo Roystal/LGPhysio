@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:lgp_app/screens/MainDrawer.dart';
 import 'package:lgp_app/services/auth.dart';
 import '../widgets/patientrow.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,6 +23,7 @@ class _PhysioHomeState extends State<PhysioHome> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      drawer: MainDrawer(),
       backgroundColor: Colors.teal[50],
       appBar: AppBar(
         title: Text('Patient List'),

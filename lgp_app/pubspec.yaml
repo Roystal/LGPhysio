@@ -36,6 +36,9 @@ dependencies:
   english_words: ^4.0.0
   circular_countdown_timer: ^0.2.0
   cloud_functions: ^1.1.1
+  firebase_storage: ^10.0.1
+  image_picker: ^0.8.2
+  url_launcher: ^6.0.9
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +69,10 @@ flutter:
     - assets/images/patient_img_001.png
     - assets/images/patient_img_002.png
     - assets/images/no_patient_found.png
+    - assets/images/feedback.png
+    - assets/images/about_us.png
+    - assets/images/edit_profile.png
+    - assets/images/profile_pic.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

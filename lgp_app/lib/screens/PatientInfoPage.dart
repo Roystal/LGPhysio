@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lgp_app/widgets/UpdateExercises.dart';
+import 'package:lgp_app/widgets/rounded_button.dart';
 import '../models/screen_data.dart';
 import '../widgets/BuildAddExercises.dart';
 import 'dart:math';
 import '../widgets/UpdateNextAppointment.dart';
 import '../widgets/UpdateInjury.dart';
-
-
 
 class PatientInfoPage extends StatefulWidget {
   static const routeName = '/second';
@@ -87,10 +87,24 @@ class _MyHomePageState extends State<MyHomePage> {
         // Update Injury button
         UpdateInjury(useruid: widget.useruid),
 
+        SizedBox(
+          height: 20,
+        ),
+
+        UpdateExercises(widget.useruid),
+
         // return to home page
         _buildReturnButton(),
       ],
     );
+  }
+
+  Widget UpdateExercises(String useruid) {
+    return RoundedButton(
+        text: "View/Edit Patient's Exercises",
+        press: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>EditPatient(useruid: useruid)));
+        });
   }
 
   Container _buildImageContainer(Size size) {
@@ -133,10 +147,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 textAlign: TextAlign.center,
               ),
-            ),
-            Text(
-              'Week: ${Random().nextInt(30) + 1}',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],
         ));

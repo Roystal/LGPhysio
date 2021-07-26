@@ -70,7 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 nameOfWorkout: widget.nameOfWorkout,
                 exercise: widget.exercise),
         // return to home page
-        _buildReturnButton(),
       ],
     );
   }
@@ -95,15 +94,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Container _buildReturnButton() {
-    return Container(
-        child: Transform.scale(
-            scale: 0,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(''),
-            )));
-  }
+
 }

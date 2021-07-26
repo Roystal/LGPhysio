@@ -1,70 +1,34 @@
-// Copyright 2018 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 import 'package:lgp_app/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lgp_app/screens/MainDrawer.dart';
+import 'package:lgp_app/widgets/editexerciserow.dart';
 import '../models/exercises.dart';
-import 'package:provider/provider.dart';
-import 'package:lgp_app/models/custom_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../widgets/exerciserow.dart';
 import '../widgets/loading.dart';
 
-class PatientHome extends StatefulWidget {
+class EditPatient extends StatefulWidget {
+  final String useruid;
+
+  const EditPatient({Key? key, required this.useruid}) : super(key: key);
   @override
-  _PatientHomeState createState() => _PatientHomeState();
+  _EditPatientState createState() => _EditPatientState();
 }
 
-class _PatientHomeState extends State<PatientHome> {
+class _EditPatientState extends State<EditPatient> {
   FirebaseAuth auth = FirebaseAuth.instance;
   final AuthService _auth = AuthService();
   @override
   // build function
   Widget build(BuildContext context) {
-    final user = Provider.of<CustomUser?>(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      drawer: MainDrawer(),
       backgroundColor: Colors.teal[50],
       appBar: AppBar(
-        title: Text('Exercise List'),
+        title: Text('Edit Patient Exercises'),
         backgroundColor: Colors.teal[400],
-        actions: [
-          Column(
-            children: [
-              TextButton.icon(
-                onPressed: () async {
-                  dynamic result = await _auth.signOut();
-                  if (result == null) {
-                    print('signed out');
-                  } else {
-                    print('error signing out');
-                  }
-                },
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: Colors.teal,
-                ),
-                label: Text(
-                  'Logout',
-                  style: TextStyle(color: Colors.teal),
-                ),
-                style: TextButton.styleFrom(
-                  onSurface: Colors.white,
-                  backgroundColor: Colors.white,
-                  shape: const BeveledRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                ),
-              ),
-            ],
-          ),
-        ],
       ),
       body: FutureBuilder(
-          future: getStuff(user!.uid),
+          future: getStuff(widget.useruid),
           builder: (context, AsyncSnapshot snapshots) {
             if (snapshots.data != null) {
               String AppointmentDate =
@@ -86,9 +50,9 @@ class _PatientHomeState extends State<PatientHome> {
                 return Center(
                   child: Column(
                     children: [
-                      TopContainer(AppointmentDate, InjuryType),
                       Container(
                           child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image.asset(
@@ -104,13 +68,8 @@ class _PatientHomeState extends State<PatientHome> {
                 );
               } else {
                 return RefreshIndicator(
-                  onRefresh: () => _refreshData(user.uid),
+                  onRefresh: () => _refreshData(widget.useruid),
                   child: Column(mainAxisSize: MainAxisSize.max, children: [
-                    Column(
-                      children: [
-                        TopContainer(AppointmentDate, InjuryType),
-                      ],
-                    ),
                     Expanded(
                       child: ListView.builder(
                           physics: const BouncingScrollPhysics(
@@ -128,8 +87,9 @@ class _PatientHomeState extends State<PatientHome> {
                               children: [
                                 Divider(),
                                 Container(
-                                  child: BuildExerciseRow(
-                                      exercise: exercising, userid: user.uid),
+                                  child: EditExerciseRow(
+                                      exercise: exercising,
+                                      userid: widget.useruid),
                                 )
                               ],
                             );
@@ -139,7 +99,12 @@ class _PatientHomeState extends State<PatientHome> {
                 );
               }
             } else {
-              return CircularProgressIndicator();
+              return Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [CircularProgressIndicator()]),
+              );
             }
           }),
     );
@@ -160,29 +125,5 @@ class _PatientHomeState extends State<PatientHome> {
   Future _refreshData(String useruid) async {
     await getStuff(useruid);
     setState(() {});
-  }
-
-  Widget TopContainer(String AppointmentDate, String InjuryType) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
-          border: Border.all(color: Colors.teal, width: 2.0)),
-      child: Column(
-        children: [
-          Text(
-            "Next Appointment Date: $AppointmentDate",
-            style:
-                TextStyle(fontFamily: "Circular", fontWeight: FontWeight.bold),
-          ),
-          Text(
-            "Injury: $InjuryType",
-            style:
-                TextStyle(fontFamily: "Circular", fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    );
   }
 }
